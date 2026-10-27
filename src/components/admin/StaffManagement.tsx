@@ -5,7 +5,7 @@ import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { StaffProfile, UserRole } from '../../types';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatDate } from '../../lib/utils';
+import { formatDate, getErrorMessage } from '../../lib/utils';
 
 export const StaffManagement: React.FC = () => {
   useStorageSubscription();
@@ -110,8 +110,8 @@ export const StaffManagement: React.FC = () => {
       }
 
       setIsFormModalOpen(false);
-    } catch (err: any) {
-      setFormError(err.message || 'Operation failed.');
+    } catch (err: unknown) {
+      setFormError(getErrorMessage(err, 'Operation failed.'));
     }
   };
 

@@ -12,7 +12,8 @@ import {
   formatDuration,
   isOvernightShift,
   checkStaffShiftOverlap,
-  exportToCSV
+  exportToCSV,
+  getErrorMessage
 } from '../../lib/utils';
 
 interface ShiftRosterProps {
@@ -146,8 +147,8 @@ export const ShiftRoster: React.FC<ShiftRosterProps> = () => {
       setFormSelectedStaff([]);
       setFormNotes('');
       setFormOverrideConfirmed(false);
-    } catch (err: any) {
-      setFormError(err.message || 'Failed to create shift.');
+    } catch (err: unknown) {
+      setFormError(getErrorMessage(err, 'Failed to create shift.'));
     }
   };
 

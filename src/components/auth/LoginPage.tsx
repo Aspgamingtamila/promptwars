@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { isDemoMode } from '../../lib/demoMode';
+import { getErrorMessage } from '../../lib/utils';
 
 export const LoginPage: React.FC = () => {
   const { signIn } = useAuth();
@@ -20,8 +21,8 @@ export const LoginPage: React.FC = () => {
       if (!ok) {
         setError('Sign-in failed. Check the demo credentials and try again.');
       }
-    } catch (err: any) {
-      setError(err.message || 'Authentication failed.');
+    } catch (err: unknown) {
+      setError(getErrorMessage(err, 'Authentication failed.'));
     } finally {
       setIsSubmitting(false);
     }

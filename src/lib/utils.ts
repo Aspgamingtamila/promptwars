@@ -138,28 +138,19 @@ export function checkStaffShiftOverlap(
 /**
  * Export data array to CSV file download in browser
  */
-export function exportToCSV(filename: string, rows: Record<string, any>[]) {
+export function exportToCSV<T extends object>(filename: string, rows: T[]) {
   if (!rows || !rows.length) return;
-  const separator = ',';
-  const keys = Object.keys(rows[0]);
-  const csvContent =
-    keys.join(separator) +
-    '\n' +
-    rows
-      .map(row => {
-        return keys
-          .map(k => {
-            let cell = row[k] === null || row[k] === undefined ? '' : row[k];
-            cell = cell instanceof Date ? cell.toLocaleString() : cell.toString();
-            cell = cell.replace(/"/g, '""');
-            if (cell.search(/("|,|\n)/g) >= 0) {
-              cell = `"${cell}"`;
-            }
-            return cell;
-          })
-          .join(separator);
-      })
-      .join('\n');
+  const keys = Object.keys(rows[0]) as Array<keyof T>;
+  const escapeCell = (value: unknown) => {
+    const raw = value == null ? '' : value instanceof Date ? value.toLocaleString() : String(value);
+    // Prevent spreadsheet formula execution when exported data is opened in Excel/Sheets.
+    const safe = /^[\u0000-\u0020\uFEFF]*[=+@-]/u.test(raw) ? `'${raw}` : raw;
+    return `"${safe.replace(/"/g, '""')}"`;
+  };
+  const csvContent = [
+    keys.map(key => escapeCell(String(key))).join(','),
+    ...rows.map(row => keys.map(key => escapeCell(row[key])).join(','))
+  ].join('\r\n');
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');
@@ -171,5 +162,12 @@ export function exportToCSV(filename: string, rows: Record<string, any>[]) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
+}
+
+export function getErrorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error && error.message) return error.message;
+  if (typeof error === 'string' && error.trim()) return error;
+  return fallback;
 }

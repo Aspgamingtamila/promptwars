@@ -6,7 +6,7 @@ import { HandoverLog, HandoverPriority, HandoverStatus } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatDateTime, exportToCSV } from '../../lib/utils';
+import { formatDateTime, exportToCSV, getErrorMessage } from '../../lib/utils';
 import { summarizeHandover, validateNonClinicalHandover } from '../../lib/gemini';
 
 export const HandoverDeck: React.FC = () => {
@@ -56,7 +56,7 @@ export const HandoverDeck: React.FC = () => {
 
   const handleGenerateAiSummary = async () => {
     if (!formTitle.trim() || !formDescription.trim()) {
-      alert('Please enter a title and description before generating an AI summary.');
+      alert('Please enter a title and description before generating a summary.');
       return;
     }
 
@@ -72,8 +72,8 @@ export const HandoverDeck: React.FC = () => {
     try {
       const summary = await summarizeHandover(formTitle, formDescription, institutionType);
       setFormAiSummary(summary);
-    } catch (err: any) {
-      console.error('Error generating AI summary:', err);
+    } catch (err: unknown) {
+      setFormError(getErrorMessage(err, 'Unable to generate a summary.'));
     } finally {
       setIsGeneratingAi(false);
     }
@@ -139,8 +139,8 @@ export const HandoverDeck: React.FC = () => {
       setFormAreaId('');
       setFormShiftId('');
       setFormNextShiftId('');
-    } catch (err: any) {
-      setFormError(err.message || 'Failed to record handover.');
+    } catch (err: unknown) {
+      setFormError(getErrorMessage(err, 'Failed to record handover.'));
     }
   };
 
@@ -528,12 +528,12 @@ export const HandoverDeck: React.FC = () => {
             />
           </div>
 
-          {/* AI Handover Summarizer Trigger & Human-in-the-Loop Review */}
+          {/* Local handover summary and human review */}
           <div className="p-3 rounded-xl bg-teal-50/50 border border-teal-200 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-primary-container font-bold text-xs">
                 <span className="material-symbols-outlined text-[16px]">auto_awesome</span>
-                <span>AI Handover Summarizer (Human Review Mandatory)</span>
+                <span>Local Handover Summary</span>
               </div>
               <button
                 type="button"

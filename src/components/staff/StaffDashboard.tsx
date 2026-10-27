@@ -6,7 +6,7 @@ import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatTime, formatDate, formatDuration, isCheckInEligible } from '../../lib/utils';
+import { formatTime, formatDate, formatDuration, isCheckInEligible, getErrorMessage } from '../../lib/utils';
 import { TaskItem, TaskStatus, HandoverPriority } from '../../types';
 import { summarizeHandover, validateNonClinicalHandover } from '../../lib/gemini';
 
@@ -71,8 +71,8 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({ onNavigateTab })
         spread: 60,
         origin: { y: 0.7 }
       });
-    } catch (err: any) {
-      alert(err.message || 'Check in failed');
+    } catch (err: unknown) {
+      alert(getErrorMessage(err, 'Check in failed'));
     }
   };
 
@@ -81,8 +81,8 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({ onNavigateTab })
     if (window.confirm('Confirm shift checkout? Make sure you have logged any pending handovers.')) {
       try {
         storageEngine.recordCheckOut(currentAssignment.id, staffId);
-      } catch (err: any) {
-        alert(err.message || 'Check out failed');
+      } catch (err: unknown) {
+        alert(getErrorMessage(err, 'Check out failed'));
       }
     }
   };
@@ -147,8 +147,8 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({ onNavigateTab })
     try {
       const summary = await summarizeHandover(handoverTitle, handoverDesc, institutionType);
       setHandoverAiSummary(summary);
-    } catch (err) {
-      console.error(err);
+    } catch (err: unknown) {
+      setHandoverWarning(getErrorMessage(err, 'Unable to generate a summary.'));
     } finally {
       setIsGeneratingAi(false);
     }
@@ -616,7 +616,7 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({ onNavigateTab })
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-primary-container flex items-center gap-1">
                 <span className="material-symbols-outlined text-[16px]">auto_awesome</span>
-                Optional AI Digest
+                Optional local summary
               </span>
               <button
                 type="button"

@@ -5,7 +5,7 @@ import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { WorkArea, InstitutionType } from '../../types';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatDate } from '../../lib/utils';
+import { formatDate, getErrorMessage } from '../../lib/utils';
 
 export const WorkAreas: React.FC = () => {
   useStorageSubscription();
@@ -76,8 +76,8 @@ export const WorkAreas: React.FC = () => {
       }
 
       setIsFormModalOpen(false);
-    } catch (err: any) {
-      setFormError(err.message || 'Operation failed.');
+    } catch (err: unknown) {
+      setFormError(getErrorMessage(err, 'Operation failed.'));
     }
   };
 

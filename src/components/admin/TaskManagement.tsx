@@ -6,7 +6,7 @@ import { TaskItem, TaskPriority, TaskStatus } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatTime, formatDate, exportToCSV } from '../../lib/utils';
+import { formatTime, formatDate, exportToCSV, getErrorMessage } from '../../lib/utils';
 
 export const TaskManagement: React.FC = () => {
   useStorageSubscription();
@@ -111,8 +111,8 @@ export const TaskManagement: React.FC = () => {
       setFormAreaId('');
       setFormShiftId('');
       setFormStaffIds([]);
-    } catch (err: any) {
-      setFormError(err.message || 'Failed to create task.');
+    } catch (err: unknown) {
+      setFormError(getErrorMessage(err, 'Failed to create task.'));
     }
   };
 

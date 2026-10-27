@@ -6,7 +6,7 @@ import { HandoverPriority } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatDateTime } from '../../lib/utils';
+import { formatDateTime, getErrorMessage } from '../../lib/utils';
 import { summarizeHandover, validateNonClinicalHandover } from '../../lib/gemini';
 
 export const StaffHandovers: React.FC = () => {
@@ -256,7 +256,7 @@ export const StaffHandovers: React.FC = () => {
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-primary-container flex items-center gap-1">
                 <span className="material-symbols-outlined text-[16px]">auto_awesome</span>
-                Optional AI Digest
+                Optional local summary
               </span>
               <button
                 type="button"

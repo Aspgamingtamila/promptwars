@@ -44,13 +44,31 @@ interface ShiftBridgeState {
   auditEvents: AuditEvent[];
 }
 
+function isShiftBridgeState(value: unknown): value is ShiftBridgeState {
+  if (typeof value !== 'object' || value === null) return false;
+  const candidate = value as Partial<ShiftBridgeState>;
+  return Boolean(
+    candidate.organization
+    && typeof candidate.organization.id === 'string'
+    && Array.isArray(candidate.profiles)
+    && Array.isArray(candidate.workAreas)
+    && Array.isArray(candidate.shifts)
+    && Array.isArray(candidate.shiftAssignments)
+    && Array.isArray(candidate.attendance)
+    && Array.isArray(candidate.tasks)
+    && Array.isArray(candidate.taskAssignments)
+    && Array.isArray(candidate.handovers)
+    && Array.isArray(candidate.auditEvents)
+  );
+}
+
 function loadState(): ShiftBridgeState {
   if (typeof localStorage !== 'undefined') {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed && parsed.organization && parsed.profiles) {
+        const parsed: unknown = JSON.parse(raw);
+        if (isShiftBridgeState(parsed)) {
           return parsed;
         }
       }
@@ -866,7 +884,7 @@ class StorageEngine {
     entityType: string,
     entityId: string,
     reason?: string | null,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, unknown>,
     actorId?: string
   ): AuditEvent {
     const newEvent: AuditEvent = {
