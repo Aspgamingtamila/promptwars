@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { isDemoMode } from '../../lib/demoMode';
 
 export const LoginPage: React.FC = () => {
   const { signIn } = useAuth();
-  const demoMode = import.meta.env.DEV
-    && typeof window !== 'undefined'
-    && ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+  const demoMode = isDemoMode;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +63,9 @@ export const LoginPage: React.FC = () => {
         /* Form Body */
         <div className="p-8 space-y-6">
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-950">
-            Development demo only. The demo password is public and does not protect real data.
+            {import.meta.env.VITE_PUBLIC_DEMO_MODE === 'true'
+              ? 'Public demo with synthetic records only. Changes stay in your browser. Do not enter real information.'
+              : 'Development demo only. The demo password is public and does not protect real data.'}
           </div>
           {error && (
             <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs font-semibold flex items-center gap-2">

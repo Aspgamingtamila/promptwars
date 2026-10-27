@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { StaffProfile, UserRole } from '../types';
 import { storageEngine } from '../lib/storageEngine';
+import { isDemoMode } from '../lib/demoMode';
 
-const isLocalhost = typeof window !== 'undefined'
-  && ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-const isDemoBuild = import.meta.env.DEV && isLocalhost;
 const DEMO_PASSWORD = 'demo-only';
 
 interface AuthContextType {
@@ -25,12 +23,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [currentUser, setCurrentUser] = useState<StaffProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const availableDemoUsers = isDemoBuild ? storageEngine.listProfiles() : [];
+  const availableDemoUsers = isDemoMode ? storageEngine.listProfiles() : [];
 
   useEffect(() => {
     // The local demo session is not an authentication mechanism. Never restore it
     // in a production build, and never grant a default administrator session.
-    if (!isDemoBuild) {
+    if (!isDemoMode) {
       localStorage.removeItem('shiftbridge_auth_user_id');
       setIsLoading(false);
       return;
@@ -51,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, password: string): Promise<boolean> => {
     // This mock sign-in exists only to preview seeded data with `vite dev`.
     // Production builds must use a real server-verified authentication provider.
-    if (!isDemoBuild || password !== DEMO_PASSWORD) {
+    if (!isDemoMode || password !== DEMO_PASSWORD) {
       return false;
     }
 
@@ -68,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const switchUser = (profile: StaffProfile) => {
-    if (!isDemoBuild) {
+    if (!isDemoMode) {
       return;
     }
     if (!profile.active) {

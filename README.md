@@ -115,6 +115,8 @@ npm run dev
 ```
 Open **`http://localhost:5173/`**. Choose a seeded persona and use the demo password `demo-only`.
 
+The public preview is available at [https://aspgamingtamila.github.io/promptwars/](https://aspgamingtamila.github.io/promptwars/). It contains synthetic data only; changes are saved in your own browser.
+
 ### 4. Production status
 
 Production builds intentionally disable demo sign-in. This prototype has no real authentication or server-backed data layer, so it is not ready for production or real workforce information. The SQL files are schema drafts and are not connected to the UI. A public Supabase anon key is not a secret, but it must be paired with reviewed row-level security policies; never place a service-role key in a `VITE_*` variable.
