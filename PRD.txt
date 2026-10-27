@@ -1,0 +1,512 @@
+PRODUCT REQUIREMENTS DOCUMENT (PRD)
+
+Project Name: ShiftBridge
+
+Document Purpose:
+This PRD defines a hackathon-ready workforce management website for Colleges & Schools and Hospitals. It is written as an implementation guide for an AI coding tool or student development team.
+
+1. PROJECT OVERVIEW
+
+ShiftBridge is a responsive website that helps an institution coordinate its support workforce. It brings staff, work areas, shifts, attendance, task checklists, and shift handovers into one system.
+
+The website supports two configurable institution types:
+- Colleges & Schools: campus support and facility staff.
+- Hospitals: round-the-clock care support and sanitation teams.
+
+The product has separate role-based experiences for administrators and staff users. Both roles use secure authentication, but see different pages and actions after signing in.
+
+For the hackathon MVP, “care teams” means non-clinical support coordination. The product must not store patient records or make clinical decisions.
+
+2. PROBLEM AND SOLUTION
+
+Problem:
+The selected problem context describes large workforces that still rely on paper registers, spreadsheets, and WhatsApp groups. Campus support and facility staff need coordinated assignments across school or college areas. Hospital support and sanitation teams need task and handover coordination across round-the-clock shifts.
+
+These manual processes can make it difficult for managers to see attendance, shift coverage, task completion, and unresolved issues in one place.
+
+Solution:
+ShiftBridge provides one website with a shared workforce coordination workflow and institution-specific settings. Managers configure staff, work areas, shifts, and tasks. Staff sign in to view their shift, check in or out, update assigned tasks, and pass unresolved issues to the next shift. Managers use a dashboard to monitor the operation.
+
+3. TARGET USERS
+
+3.1 Administrator / Manager
+Examples: facility manager, operations manager, campus administrator, hospital support-services supervisor.
+Needs:
+- Manage staff, roles, work areas, shifts, and tasks.
+- Review attendance and shift coverage.
+- See incomplete tasks and open handover issues.
+- Switch between the Colleges & Schools and Hospitals configurations.
+
+3.2 Staff User
+Examples: campus maintenance or sanitation staff; hospital support or sanitation staff.
+Needs:
+- View their assigned shift, area, and tasks on a phone.
+- Check in and out.
+- Update task progress.
+- Report an issue or leave a handover note.
+
+3.3 Hackathon Demonstrator
+A team member can use seeded demo accounts and sample data to show both institution configurations without connecting to real institutional systems.
+
+4. PRODUCT SCOPE AND ASSUMPTIONS
+
+- One website serves both institution types.
+- Institution type changes the labels, sample work areas, roles, and task templates shown in the interface.
+- The MVP uses one demo organization at a time. The data model should allow organizations to be added later.
+- The MVP is for workforce coordination, not payroll, clinical care, patient management, or HR compliance.
+- The primary interface is a responsive web application usable on desktop and mobile browsers.
+- No real-time chat integration is required. Handover notes and issue records are stored in the website.
+- Use seeded fictional names and records for the demo.
+
+5. FUNCTIONAL REQUIREMENTS
+
+FR-1 Authentication
+- Users must sign in before accessing admin or staff pages.
+- Provide secure email/password authentication through the selected backend provider.
+- Provide sign-out.
+- Show role-appropriate access after login.
+- Admin and staff routes must be protected. Unauthenticated users are redirected to login.
+- A staff account must not access admin pages or admin data actions.
+- Do not store plaintext passwords in the application database.
+- Include a seeded demo admin and at least two demo staff accounts, with instructions for local development.
+
+FR-2 Institution configuration
+- Admin can select Colleges & Schools or Hospitals for the active demo organization.
+- The selected type controls labels, default roles, work-area examples, and task templates.
+- Users can switch configurations in the demo without creating a separate website.
+- Changing institution type must not erase existing records. Existing records retain their organization and work-area associations.
+
+FR-3 Staff management
+- Admin can list, search, add, edit, activate, and deactivate staff.
+- Staff fields: full name, email, role/title, phone (optional), institution type, assigned work area (optional), active status.
+- Admin can assign the staff user a login account or invite status.
+- Deactivated users cannot sign in or receive new assignments.
+- Staff can view their own profile but cannot edit role or access level.
+
+FR-4 Work-area management
+- Admin can create, edit, activate, and deactivate work areas.
+- Examples for Colleges & Schools: classroom block, library, laboratory, corridor, grounds, washroom.
+- Examples for Hospitals: ward, outpatient area, corridor, washroom, support area.
+- Work-area fields: name, institution type, description (optional), active status.
+- A work area cannot be deleted if it has shifts or tasks. Admin may deactivate it instead.
+
+FR-5 Shift roster
+- Admin can create, view, edit, and cancel shifts.
+- A shift contains: title, institution type, work area, start time, end time, assigned staff, status, and optional notes.
+- Support overnight shifts where the end time is on the next calendar day.
+- Shift status values: Scheduled, In Progress, Completed, Cancelled.
+- Prevent assigning an inactive staff member or inactive work area.
+- Show an overlap warning when a staff member is assigned to two shifts whose times overlap. The MVP may allow the manager to override the warning after confirmation.
+- Admin can filter shifts by date, institution type, area, and status.
+- Staff can see only their own shifts.
+
+FR-6 Attendance
+- Staff can check in to an assigned shift and check out from it.
+- MVP check-in method: authenticated user presses a check-in button and confirms the shift. QR or PIN may be used only if implemented reliably within the hackathon.
+- Store server timestamp for check-in and check-out.
+- Allow only one active check-in per user and shift.
+- Staff cannot check in to another staff member’s shift.
+- Admin can view attendance status and timestamps for each shift.
+- Admin can correct an attendance record only through an auditable admin action with a required reason.
+- Attendance statuses: Not Checked In, Checked In, Checked Out, Absent (manager-set).
+- Attendance is a coordination record, not a payroll calculation.
+
+FR-7 Task checklist
+- Admin can create tasks and assign them to a shift, work area, and one or more staff members.
+- Task fields: title, description, institution type, work area, shift, assignees, due time (optional), priority, status, completion timestamp, and optional note.
+- Task status values: To Do, In Progress, Blocked, Done.
+- Staff can view and update tasks assigned to them.
+- Staff can add a note when changing a task to Blocked or Done.
+- Admin can view all tasks and filter by date, area, assignee, status, and institution type.
+- Sample task examples:
+  - College: inspect assigned area; report maintenance issue; complete cleaning checklist.
+  - Hospital: complete sanitation checklist for assigned area; restock non-clinical supplies; report facility issue.
+- Do not include patient-specific work instructions or patient information.
+
+FR-8 Handover and issue log
+- Staff can create a handover item linked to a shift and work area.
+- Handover fields: title, description, priority, status, creator, created time, assigned next shift (optional), and resolution note.
+- Status values: Open, Acknowledged, Resolved.
+- Staff can view handover items relevant to their assigned area and current/next shift.
+- Admin can view, assign, acknowledge, and resolve handover items.
+- Unresolved items must be visible on the admin dashboard.
+- Handover notes must not contain patient-identifying or other sensitive personal information. Display a reminder near the entry form.
+
+FR-9 Admin dashboard
+- Show summary cards for today’s scheduled shifts, checked-in staff, open tasks, and open handover items.
+- Show a shift coverage list grouped by area.
+- Highlight shifts with unfilled assignments and tasks marked Blocked.
+- Provide links from each summary to the relevant filtered list.
+- Provide an institution-type selector or clear active-mode label.
+- Dashboard figures must be calculated from stored records, not hardcoded display values.
+
+FR-10 Staff dashboard
+- Show the signed-in staff member’s next/current shift.
+- Show check-in/check-out control when applicable.
+- Show assigned tasks grouped by status.
+- Show relevant open handover items.
+- Provide an obvious way to report a blocker or handover note.
+
+FR-11 Audit and error feedback
+- Record important admin actions: staff activation/deactivation, shift create/edit/cancel, attendance correction, task reassignment, and handover resolution.
+- Show clear success, validation, permission, and network error messages.
+- Confirm before destructive or consequential actions such as cancelling a shift or deactivating staff.
+
+6. DETAILED FEATURE DESCRIPTIONS
+
+6.1 Role-based pages
+The website must provide two main role-specific areas:
+- Admin area: dashboard, staff, work areas, shifts, tasks, handovers, and settings.
+- Staff area: my shift, attendance, my tasks, handovers, and profile.
+
+These are separate user experiences within the same website. They are not separate applications or separate authentication systems. The authenticated user’s role controls navigation and server-side permissions.
+
+6.2 Institution modes
+The institution selector changes operational context and example data:
+- Colleges & Schools mode uses campus terminology and campus work areas.
+- Hospitals mode uses hospital support terminology and hospital work areas.
+The shared components and data model remain the same wherever the workflow is the same.
+
+6.3 Attendance interaction
+The staff dashboard shows a check-in button only for a shift assigned to the signed-in user and within a configurable check-in window. For the MVP, use a simple default window of two hours before shift start through shift end. Admin may still record an absence manually. Display the recorded time and current attendance status.
+
+6.4 Task interaction
+A staff member opens a task, reviews its title, description, area, due time, and priority, then changes its status. If marking Blocked, the staff member must enter a reason. If marking Done, a short completion note is optional.
+
+6.5 Handover interaction
+At shift end, a staff member can create an issue for the next team, select an area, add a concise description, and optionally link the next shift. The next team can acknowledge it. Admin can assign or resolve it. The interface should preserve the original note and show any resolution note separately.
+
+7. UI/UX REQUIREMENTS
+
+- Responsive layout: support common phone, tablet, and desktop widths.
+- Use a clear, accessible navigation layout with separate Admin and Staff navigation.
+- Keep the active institution mode visible in page headers.
+- Use plain labels and avoid unexplained abbreviations.
+- Use cards or tables for summaries and lists; provide a mobile-friendly stacked view for dense tables.
+- Provide search and filters on staff, shift, task, and handover lists.
+- Include empty states with a clear next action, such as “No shifts scheduled” or “Create a shift.”
+- Show loading states, form validation, confirmation dialogs, and success/error feedback.
+- Use status labels plus color; never communicate status by color alone.
+- Ensure keyboard navigation, visible focus states, and labeled form fields.
+- Use an accessible contrast ratio and readable font sizes.
+- Prevent double submissions on check-in, task updates, and forms.
+- Do not expose data from other roles through hidden buttons alone; permissions must also be enforced by the backend.
+
+Suggested pages:
+1. Login
+2. Admin Dashboard
+3. Admin Staff Management
+4. Admin Work Areas
+5. Admin Shift Roster
+6. Admin Tasks
+7. Admin Handovers
+8. Staff Dashboard / My Shift
+9. Staff Tasks
+10. Staff Handovers
+11. Profile / Sign Out
+
+8. TECHNOLOGY STACK
+
+Recommended hackathon stack:
+- Frontend: React with TypeScript.
+- Build tool: Vite.
+- Styling: Tailwind CSS or CSS modules; choose one and use consistently.
+- Backend and database: Supabase Auth and PostgreSQL.
+- Server-side authorization: PostgreSQL Row Level Security (RLS) policies and trusted server-side functions for sensitive operations.
+- Hosting: Vercel or Netlify for the frontend; Supabase hosted project for backend.
+- Optional charts: a lightweight chart library only if the dashboard needs charts. Lists and summary cards are sufficient for MVP.
+- Optional QR support: a maintained browser QR scanning library. If camera support creates deployment risk, use the authenticated check-in button instead.
+
+Do not implement a custom password system. Keep secrets in environment variables and never expose service-role credentials in frontend code.
+
+9. SYSTEM ARCHITECTURE
+
+Architecture:
+- Responsive React client renders admin and staff pages.
+- Supabase Auth authenticates users and provides a user identifier.
+- PostgreSQL stores organizations, profiles, work areas, shifts, assignments, attendance, tasks, handovers, and audit events.
+- RLS policies enforce organization and role boundaries for all database reads and writes.
+- Trusted database functions or server-side functions perform sensitive changes such as attendance corrections and audit logging.
+- The frontend subscribes to or reloads data after changes. Realtime updates are optional and not required for MVP.
+
+Request flow:
+1. User signs in through Supabase Auth.
+2. Client obtains the authenticated session.
+3. Client loads the user profile and role.
+4. Client routes the user to the appropriate dashboard.
+5. Database requests are evaluated against RLS policies.
+6. Successful actions update the relevant record and audit event.
+7. UI refreshes the relevant list and displays confirmation.
+
+10. BACKEND AND DATABASE REQUIREMENTS
+
+Use UUID primary keys and created_at/updated_at timestamps. Store timestamps in UTC and render them in the organization’s configured timezone.
+
+Suggested tables:
+
+organizations
+- id
+- name
+- institution_type: school_college or hospital
+- timezone
+- created_at
+- updated_at
+
+profiles
+- id (matches auth user id)
+- organization_id
+- full_name
+- email
+- phone (nullable)
+- role: admin or staff
+- job_title
+- active
+- created_at
+- updated_at
+
+work_areas
+- id
+- organization_id
+- name
+- institution_type
+- description (nullable)
+- active
+- created_at
+- updated_at
+
+shifts
+- id
+- organization_id
+- work_area_id
+- title
+- institution_type
+- starts_at
+- ends_at
+- status
+- notes (nullable)
+- created_by
+- created_at
+- updated_at
+
+shift_assignments
+- id
+- organization_id
+- shift_id
+- staff_profile_id
+- created_at
+- unique constraint on shift_id and staff_profile_id
+
+attendance
+- id
+- organization_id
+- shift_assignment_id
+- status
+- checked_in_at (nullable)
+- checked_out_at (nullable)
+- corrected_by (nullable)
+- correction_reason (nullable)
+- updated_at
+
+tasks
+- id
+- organization_id
+- shift_id
+- work_area_id
+- title
+- description (nullable)
+- priority
+- status
+- due_at (nullable)
+- completed_at (nullable)
+- created_by
+- created_at
+- updated_at
+
+task_assignments
+- id
+- organization_id
+- task_id
+- staff_profile_id
+- created_at
+- unique constraint on task_id and staff_profile_id
+
+handovers
+- id
+- organization_id
+- shift_id
+- next_shift_id (nullable)
+- work_area_id
+- title
+- description
+- priority
+- status
+- created_by
+- acknowledged_by (nullable)
+- resolved_by (nullable)
+- resolution_note (nullable)
+- created_at
+- updated_at
+
+audit_events
+- id
+- organization_id
+- actor_profile_id
+- action
+- entity_type
+- entity_id
+- reason (nullable)
+- metadata (JSON, no secrets or sensitive patient data)
+- created_at
+
+Database and authorization rules:
+- Every operational record belongs to an organization.
+- Staff can read only their own profile, assigned shifts, assigned tasks, and handovers relevant to their work area/shift.
+- Staff can update only permitted fields on their own assigned tasks and attendance.
+- Staff cannot create admin accounts, edit roles, change organization membership, or correct attendance.
+- Admins can manage records within their organization.
+- All write policies must be tested; hiding UI controls is not sufficient access control.
+- Add indexes for organization_id, shift date, work_area_id, staff_profile_id, and status fields used in filters.
+- Use foreign keys and restrict deletion when dependent operational records exist.
+- Never place patient names, medical record numbers, diagnoses, or clinical notes in the database.
+
+11. AI INTEGRATION REQUIREMENTS
+
+AI is optional and excluded from the core MVP.
+
+Optional feature: Handover Summary
+- Input: handover text entered by staff, with no patient-identifying or sensitive personal data.
+- Output: a short draft summary for the next shift.
+- Show both original text and generated summary.
+- Require a human to review and accept the summary before it is saved or shared.
+- If the AI service is unavailable, the handover workflow must continue without it.
+- Do not use AI to assign staff, make attendance decisions, assess worker performance, prioritize clinical care, or make patient-care recommendations.
+- Do not send authentication data, staff private contact details, or sensitive personal information to an AI provider.
+- Add an explicit content reminder before submission.
+- Keep the provider API key on the server, never in frontend code.
+
+12. USER WORKFLOWS
+
+12.1 Admin setup and shift creation
+1. Admin signs in.
+2. Admin chooses Colleges & Schools or Hospitals mode.
+3. Admin adds or selects work areas.
+4. Admin adds staff and assigns staff roles.
+5. Admin creates a shift with a work area, start/end time, and staff assignments.
+6. Admin adds tasks to the shift and assigns them to staff.
+7. Admin reviews the roster and any overlap or coverage warnings.
+
+12.2 Staff shift
+1. Staff signs in on a phone.
+2. Staff views current/next shift and assigned area.
+3. Staff checks in when the shift is eligible.
+4. Staff opens assigned tasks and updates each task’s status.
+5. If blocked, staff records a reason.
+6. Staff creates a handover for unresolved work as needed.
+7. Staff checks out at shift end.
+
+12.3 Next shift and manager review
+1. Next shift staff sign in and see relevant open handovers.
+2. Staff acknowledge a handover and continue the work if assigned.
+3. Admin dashboard shows current coverage, open tasks, and unresolved handovers.
+4. Admin resolves or reassigns issues and reviews attendance.
+
+13. MVP SCOPE
+
+Must have:
+- Secure login with admin and staff roles.
+- Role-protected Admin and Staff pages.
+- Institution mode switch for Colleges & Schools and Hospitals.
+- Staff and work-area management.
+- Shift creation and staff assignment.
+- Staff shift view and check-in/check-out.
+- Task creation, assignment, and status updates.
+- Handover creation and resolution.
+- Admin dashboard with live counts and coverage/task/handover lists.
+- Seeded demo records and demo login instructions.
+- Responsive mobile layout.
+- Basic RLS authorization.
+
+Should have if time permits:
+- Search and filtering.
+- Shift overlap warning.
+- Audit event list.
+- CSV export of roster or attendance.
+- Optional AI-generated handover draft.
+
+Out of scope for hackathon MVP:
+- Payroll and wage calculations.
+- Biometrics or GPS tracking.
+- Patient records or clinical workflows.
+- Automated staffing optimization.
+- WhatsApp or SMS integration.
+- Integration with school/hospital HR, payroll, or patient systems.
+- Complex offline synchronization.
+- Multi-organization billing or subscription management.
+
+14. DEVELOPMENT PHASES
+
+Phase 1: Foundation
+- Create React/TypeScript project.
+- Configure Supabase project and environment variables.
+- Add database schema, migrations, seed data, and RLS policies.
+- Implement login, sign-out, profile loading, and protected routes.
+
+Phase 2: Role-based interface
+- Build shared layout and navigation.
+- Build Admin and Staff dashboards.
+- Add institution mode selector and mode-specific sample labels/data.
+
+Phase 3: Operations
+- Implement staff and work-area management.
+- Implement shifts and assignments.
+- Implement attendance.
+- Implement tasks and task status updates.
+- Implement handovers and resolution.
+
+Phase 4: Demo readiness
+- Add filters, empty states, validation, loading/error states, and confirmation prompts.
+- Seed realistic fictional records for both institution modes.
+- Verify mobile layout and the full demo workflow.
+- Prepare demo credentials and a short presentation scenario.
+
+Phase 5: Optional enhancements
+- Add audit history, CSV export, or AI handover summary only after the core workflow is stable.
+
+15. TESTING REQUIREMENTS
+
+15.1 Authentication and authorization
+- Unauthenticated users cannot access protected pages.
+- Admin can access admin pages and manage organization records.
+- Staff cannot access admin pages or perform admin-only writes.
+- Staff can see only their own assigned shifts/tasks and relevant handovers.
+- Deactivated staff cannot sign in or access operational data.
+- RLS restrictions work when database APIs are called directly, not only through the UI.
+
+15.2 Shift and attendance
+- Admin can create, edit, cancel, and filter shifts.
+- Invalid end-before-start times are rejected, except valid overnight shifts.
+- Overlap warning appears for conflicting assignments.
+- Staff can check in/out only on their assigned shift.
+- Duplicate check-ins and check-outs are prevented.
+- Attendance timestamps are stored and displayed correctly in the configured timezone.
+- Admin attendance corrections require a reason and create an audit event.
+
+15.3 Tasks and handovers
+- Admin can create and assign tasks.
+- Staff can update only their assigned tasks.
+- Blocked tasks require a reason.
+- Staff can create handovers linked to a valid shift and work area.
+- Admin can acknowledge, assign, and resolve handovers.
+- Resolved items remain available for history.
+- No patient-specific fields are present.
+
+15.4 UI and reliability
+- Core pages work at desktop and phone widths.
+- Forms validate required fields and show understandable errors.
+- Loading, empty, and error states are visible.
+- Repeated clicks do not create duplicate submissions.
+- Dashboard totals match the underlying records.
+- If the optional AI feature fails, users can still create and manage handovers.
+
+Acceptance criterion for the hackathon demo:
+A manager can sign in, switch between the Colleges & Schools and Hospitals modes, create a shift and tasks, and assign staff. A staff user can sign in separately, view their own shift, check in, update a task, and create a handover. The manager can then see the updated attendance, task status, and handover on the admin dashboard. Data is protected by role-based backend authorization.

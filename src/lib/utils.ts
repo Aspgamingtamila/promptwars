@@ -1,0 +1,175 @@
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { format, parseISO, isAfter, isBefore, subHours } from 'date-fns';
+import { Shift, OverlapConflict } from '../types';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatTime(isoString: string): string {
+  if (!isoString) return '--:--';
+  try {
+    return format(parseISO(isoString), 'HH:mm');
+  } catch {
+    return isoString;
+  }
+}
+
+export function formatDate(isoString: string): string {
+  if (!isoString) return '--';
+  try {
+    return format(parseISO(isoString), 'MMM d, yyyy');
+  } catch {
+    return isoString;
+  }
+}
+
+export function formatDateTime(isoString: string): string {
+  if (!isoString) return '--';
+  try {
+    return format(parseISO(isoString), 'MMM d, yyyy • HH:mm');
+  } catch {
+    return isoString;
+  }
+}
+
+export function isOvernightShift(startsAt: string, endsAt: string): boolean {
+  if (!startsAt || !endsAt) return false;
+  try {
+    const start = new Date(startsAt);
+    const end = new Date(endsAt);
+    const startDateStr = `${start.getUTCFullYear()}-${start.getUTCMonth()}-${start.getUTCDate()}`;
+    const endDateStr = `${end.getUTCFullYear()}-${end.getUTCMonth()}-${end.getUTCDate()}`;
+    return startDateStr !== endDateStr || end < start;
+  } catch {
+    return false;
+  }
+}
+
+export function formatDuration(startsAt: string, endsAt: string): string {
+  if (!startsAt || !endsAt) return '';
+  try {
+    const start = new Date(startsAt).getTime();
+    const end = new Date(endsAt).getTime();
+    const diffMs = Math.max(0, end - start);
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    return `${diffHours}h ${diffMins}m`;
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Check if the current time is within the eligible check-in window.
+ * PRD 6.3: "simple default window of two hours before shift start through shift end"
+ */
+export function isCheckInEligible(startsAt: string, endsAt: string, now: Date = new Date()): { eligible: boolean; message: string } {
+  try {
+    const start = parseISO(startsAt);
+    const end = parseISO(endsAt);
+    const windowStart = subHours(start, 2);
+
+    if (isBefore(now, windowStart)) {
+      return {
+        eligible: false,
+        message: `Check-in opens at ${format(windowStart, 'HH:mm')} (2 hours prior to shift).`
+      };
+    }
+
+    if (isAfter(now, end)) {
+      return {
+        eligible: false,
+        message: `Shift ended at ${format(end, 'HH:mm')}. Window closed.`
+      };
+    }
+
+    return {
+      eligible: true,
+      message: 'Eligible for Check-In'
+    };
+  } catch {
+    return { eligible: true, message: 'Eligible' };
+  }
+}
+
+/**
+ * Detect shift overlap for assigned staff member:
+ * (ExistingStart < NewEnd) AND (ExistingEnd > NewStart)
+ */
+export function checkStaffShiftOverlap(
+  allShifts: Shift[],
+  staffId: string,
+  staffName: string,
+  newStartISO: string,
+  newEndISO: string,
+  excludeShiftId?: string
+): OverlapConflict | null {
+  try {
+    const newStart = new Date(newStartISO).getTime();
+    const newEnd = new Date(newEndISO).getTime();
+
+    for (const shift of allShifts) {
+      if (excludeShiftId && shift.id === excludeShiftId) continue;
+      if (shift.status === 'Cancelled') continue;
+
+      const isAssigned = shift.assignments?.some(a => a.staff_profile_id === staffId);
+      if (!isAssigned) continue;
+
+      const existingStart = new Date(shift.starts_at).getTime();
+      const existingEnd = new Date(shift.ends_at).getTime();
+
+      // Overlap condition
+      if (existingStart < newEnd && existingEnd > newStart) {
+        return {
+          staffId,
+          staffName,
+          existingShift: shift
+        };
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Export data array to CSV file download in browser
+ */
+export function exportToCSV(filename: string, rows: Record<string, any>[]) {
+  if (!rows || !rows.length) return;
+  const separator = ',';
+  const keys = Object.keys(rows[0]);
+  const csvContent =
+    keys.join(separator) +
+    '\n' +
+    rows
+      .map(row => {
+        return keys
+          .map(k => {
+            let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+            cell = cell instanceof Date ? cell.toLocaleString() : cell.toString();
+            cell = cell.replace(/"/g, '""');
+            if (cell.search(/("|,|\n)/g) >= 0) {
+              cell = `"${cell}"`;
+            }
+            return cell;
+          })
+          .join(separator);
+      })
+      .join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  if (link.download !== undefined) {
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}

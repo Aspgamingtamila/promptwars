@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"tertiary-container":"#a65900","on-primary-fixed-variant":"#005049","inverse-surface":"#263143","primary":"#005f57","error-container":"#ffdad6","tertiary-fixed":"#ffdcc3","primary-container":"#0d7a70","on-secondary":"#ffffff","inverse-on-surface":"#ecf1ff","on-secondary-fixed-variant":"#3a485b","outline-variant":"#bdc9c6","background":"#f9f9ff","on-primary-container":"#acfff3","primary-fixed":"#99f3e6","error":"#ba1a1a","on-primary-fixed":"#00201d","on-tertiary":"#ffffff","surface-bright":"#f9f9ff","surface-dim":"#cfdaf2","on-background":"#111c2d","secondary-fixed-dim":"#b9c7df","secondary-container":"#d5e3fc","surface":"#f9f9ff","on-tertiary-fixed":"#2f1500","inverse-primary":"#7dd6ca","on-tertiary-container":"#ffede1","on-tertiary-fixed-variant":"#6e3900","surface-container-low":"#f0f3ff","on-surface-variant":"#3e4947","on-primary":"#ffffff","surface-container-highest":"#d8e3fb","on-error":"#ffffff","tertiary":"#824500","surface-variant":"#d8e3fb","on-error-container":"#93000a","on-secondary-fixed":"#0d1c2e","surface-container-lowest":"#ffffff","surface-container-high":"#dee8ff","on-surface":"#111c2d","primary-fixed-dim":"#7dd6ca","tertiary-fixed-dim":"#ffb77d","on-secondary-container":"#57657a","secondary":"#515f74","surface-container":"#e7eeff","surface-tint":"#006a61","secondary-fixed":"#d5e3fc","outline":"#6e7977"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"gutter-sm":"1rem","space-md":"1rem","space-xl":"2rem","space-sm":"0.5rem","space-2xl":"3rem","gutter-lg":"2rem","space-xs":"0.25rem","margin-lg":"2.5rem","margin-sm":"1rem","margin":"1.5rem","gutter":"1.5rem","space-lg":"1.5rem"},fontFamily:{"label-md":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"label-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"data-tabular":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"]},fontSize:{"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"600"}],"display-lg-mobile":["28px",{"lineHeight":"34px","letterSpacing":"-0.015em","fontWeight":"700"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.015em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"18px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"600"}],"data-tabular":["13px",{"lineHeight":"18px","fontWeight":"500"}],"headline-lg-mobile":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"title-md":["15px",{"lineHeight":"20px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface min-h-screen"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest z-50 flex flex-col shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-space-md flex items-center gap-space-sm bg-surface-container-lowest"><img alt="ShiftBridge Brand Mark" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlPb4OJ7f4r7LxuPd0Z26fjNavHZqyebMqnwUrT5cbfWqvhTJzK7LdMfGxCRyqXho6KgFUTam_JI1inAe1uRqow_uhmxAVMj7wQ8r5YcGzGw8Ow9U7qd13T3dS4L7b_phPHastViphymEV6FQ-p95_utknyba9uDCMVue0FpuxH62mtb6Wq5VC0xdU5pPDhVn7oWRfAuilFPZ65b2V__f1_7sWoA5f8oQZfeAbdF1Yeo8ovK_X0Rlzfg"/><div class="flex flex-col"><span class="font-title-md text-title-md text-on-surface tracking-tight leading-none">ShiftBridge</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Workforce Core</span></div></div><div class="px-space-md py-space-sm bg-surface-container-low"><div class="flex items-center justify-between text-on-surface-variant"><span class="font-label-sm text-label-sm uppercase tracking-wider">Active Console</span><span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Live Ops</span></div></div><nav class="flex-1 px-space-sm py-space-md space-y-1 overflow-y-auto" data-active-classes="bg-primary-container text-on-primary-container font-label-lg rounded-xl"><div class="px-space-sm pb-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Operations Command</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview-command" href="#"><span class="material-symbols-outlined text-headline-sm">grid_view</span><span class="font-label-lg text-label-lg">Overview / Command</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-on-primary-container font-label-lg rounded-xl" data-path="shift-roster" href="#"><span class="material-symbols-outlined text-headline-sm">calendar_today</span><span class="font-label-lg text-label-lg">Shift Roster</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="operational-tasks" href="#"><span class="material-symbols-outlined text-headline-sm">checklist</span><span class="font-label-lg text-label-lg">Operational Tasks</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shift-handovers" href="#"><span class="material-symbols-outlined text-headline-sm">sync_alt</span><span class="font-label-lg text-label-lg">Shift Handovers</span></a><div class="pt-space-md px-space-sm pb-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Workforce &amp; Infrastructure</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="staff-management" href="#"><span class="material-symbols-outlined text-headline-sm">group</span><span class="font-label-lg text-label-lg">Staff Management</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="work-areas" href="#"><span class="material-symbols-outlined text-headline-sm">domain</span><span class="font-label-lg text-label-lg">Work Areas</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="system-settings" href="#"><span class="material-symbols-outlined text-headline-sm">settings</span><span class="font-label-lg text-label-lg">System Settings</span></a></nav><div class="p-space-md bg-surface-container-lowest"><div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant">Dispatch Sync</span><span class="inline-block w-2 h-2 rounded-full bg-primary"></span></div><span class="font-body-sm text-body-sm text-on-surface">Non-Clinical Floor 4 &amp; 5 Roster</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><div class="inline-flex items-center p-0.5 rounded-xl bg-surface-container-high"><button class="px-space-md py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-[0_1px_3px_rgba(0,0,0,0.06)] flex items-center gap-1.5" type="button"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Colleges &amp; Schools</button><button class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" type="button">Hospitals Non-Clinical</button></div><div class="hidden xl:flex items-center gap-2 pl-space-sm text-on-surface-variant"><span class="material-symbols-outlined text-headline-sm text-on-surface-variant">event_available</span><span class="font-data-tabular text-data-tabular text-on-surface">Wednesday, Oct 24 • Morning Cycle</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:inline-flex items-center gap-1.5 px-space-md py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm"><span class="material-symbols-outlined text-label-lg">notification_important</span><span>2 Roster Gaps Pending</span></div><div class="flex items-center gap-space-sm pl-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf951JGFlVmLBwDK4BTWMnGbXOvIYIG5f1G3xDPdU698l0Ya7ikJ6n_jakgOrY00KogiTG3KYtSUzwfWR0v4P8RGqv-9U2au1ewMrQR9mT88pGLU2ErlDxM-8Z7EKt1FnhLU8VdEGzNpyWtA6H7eC0nivsdSkXV_fytKOVYyAC9HZz6p-VKIV1552FrP1FCJZI6o89CFCEXu_Xa883PfJI7nVP2G6SeXisujusv2lQQcOeHo6SLRJ4Lw"/><div class="flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight">Elena Vance</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Operations Admin</span></div><button aria-label="User menu" class="text-on-surface-variant hover:text-on-surface" type="button"><span class="material-symbols-outlined text-headline-sm">keyboard_arrow_down</span></button></div></div></header><div class="pt-16"><div class="w-full px-space-lg pt-space-md pb-space-sm bg-surface-container-lowest flex items-center justify-between"><div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm"><span class="text-on-surface-variant">ShiftBridge</span><span class="material-symbols-outlined text-label-sm">chevron_right</span><span class="text-on-surface-variant">Command Deck</span><span class="material-symbols-outlined text-label-sm">chevron_right</span><span class="text-on-surface font-label-md text-label-md">Active Shift Schedule</span></div><div class="inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-label-md text-primary">verified_user</span><span>Demo Mode: Operations Admin Override Enabled</span></div></div><main class="w-full px-space-lg py-space-md bg-surface flex-1"><div class="flex flex-col w-full space-y-space-md">
+<!-- Operational Alert Banner: Unassigned Slot Alert -->
+<div class="flex items-center justify-between px-space-md py-space-sm bg-tertiary-fixed text-on-tertiary-fixed rounded-xl shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-headline-sm text-tertiary">warning</span>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg">Coverage Advisory:</span>
+<span class="font-body-md text-body-md">1 unassigned afternoon slot in <strong class="font-label-lg">Library &amp; Study Halls</strong> (Shift #105, 14:00 - 22:00). Early lockup protocol at risk.</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-1 bg-surface-container-lowest text-on-surface hover:bg-surface rounded-lg font-label-md text-label-md transition-all shadow-sm" onclick="openShiftDrawer('105')" type="button">
+        Quick Reassign
+      </button>
+<button aria-label="Dismiss alert" class="p-1 hover:bg-tertiary-fixed-dim/40 rounded-lg text-on-tertiary-fixed transition-colors" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+</div>
+<!-- Header Controls: Title, Date Nav, View Toggles & Actions -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Shift Roster &amp; Coverage</h1>
+<span class="px-space-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Active Deck</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Live roster synchronization, biometric badge feeds, and staffing thresholds</p>
+</div>
+<!-- Date Navigator -->
+<div class="flex items-center gap-1.5 p-1 bg-surface-container-low rounded-xl">
+<button class="p-1 rounded-lg hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Previous Day" type="button">
+<span class="material-symbols-outlined text-title-md">chevron_left</span>
+</button>
+<button class="px-space-md py-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-label-lg text-primary">calendar_today</span>
+<span>Today, Oct 24, 2024</span>
+</button>
+<button class="p-1 rounded-lg hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Next Day" type="button">
+<span class="material-symbols-outlined text-title-md">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Right Controls: View Switcher, Export, + New Shift -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="inline-flex p-1 rounded-xl bg-surface-container-low">
+<button class="px-space-md py-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm" type="button">Day View</button>
+<button class="px-space-md py-1 rounded-lg text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" type="button">Week View</button>
+</div>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-label-lg">file_download</span>
+<span>Export Sheet</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm transition-colors" onclick="document.getElementById('newShiftModal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-label-lg">add</span>
+<span>New Shift</span>
+</button>
+</div>
+</div>
+<!-- Operational Filter Strip & Quick Metas -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-sm bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<!-- Search Bar -->
+<div class="xl:col-span-4 relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-label-lg pointer-events-none">search</span>
+<input class="w-full pl-9 pr-space-md py-2 rounded-lg bg-surface-container-low text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container/20 transition-all" placeholder="Filter staff name, badge ID, or zone..." type="text"/>
+</div>
+<!-- Work Area Dropdown -->
+<div class="xl:col-span-3">
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest">
+<option>All Work Areas (4 active sectors)</option>
+<option>Science Labs &amp; Bio-Research</option>
+<option>Library &amp; Study Halls</option>
+<option>North Grounds &amp; Maintenance</option>
+<option>Dining Pavilion &amp; Nutrition Services</option>
+</select>
+</div>
+<!-- Status Filter -->
+<div class="xl:col-span-3">
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest">
+<option>All Shift Statuses (Live, Scheduled)</option>
+<option>In Progress</option>
+<option>Scheduled</option>
+<option>Warning: Coverage Deficit</option>
+<option>Completed / Handed Over</option>
+</select>
+</div>
+<!-- Toggle Coverage Gaps Only -->
+<div class="xl:col-span-2 flex items-center justify-between xl:justify-end gap-space-sm px-space-sm bg-surface-container-low rounded-lg">
+<label class="font-label-sm text-label-sm text-on-surface-variant cursor-pointer select-none" for="coverageFilter">Alerts Only</label>
+<input class="w-4 h-4 rounded text-primary-container focus:ring-0 cursor-pointer" id="coverageFilter" type="checkbox"/>
+</div>
+</div>
+<!-- Operational Metrics Strip (High-velocity status cards) -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Scheduled Headcount</span>
+<span class="p-1.5 rounded-lg bg-secondary-container text-on-secondary-container material-symbols-outlined text-headline-sm">groups</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-on-surface">38</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/ 40 slots</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-space-sm overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 95%;"></div>
+</div>
+</div>
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Active On-Duty</span>
+<span class="p-1.5 rounded-lg bg-primary-fixed text-on-primary-fixed material-symbols-outlined text-headline-sm">how_to_reg</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-primary">19</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">checked in</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-space-sm overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Roster Discrepancies</span>
+<span class="p-1.5 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed material-symbols-outlined text-headline-sm">assignment_late</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-tertiary">1</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">unassigned post</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-space-sm overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 25%;"></div>
+</div>
+</div>
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Overnight Roster (+1)</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-on-surface material-symbols-outlined text-headline-sm">bedtime</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-on-surface">6</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">guards locked</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-space-sm overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+<!-- Main Roster Area: Grouped by Work Areas -->
+<div class="flex flex-col space-y-space-md">
+<!-- Group 1: Science Labs & Bio-Research -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<!-- Section Header -->
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<h2 class="font-title-md text-title-md text-on-surface tracking-tight">Science Labs &amp; Hazardous Containment</h2>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">High Security Tier-3</span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-sm text-label-sm">
+<span>Coverage: <strong class="text-on-surface">100% Satisfied</strong></span>
+<span class="text-surface-dim">•</span>
+<span>Shift Window: 07:00 – 15:30</span>
+</div>
+</div>
+<!-- Shift Row 1: Morning Facility Inspection (Shift #104) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 items-center p-space-md gap-space-md hover:bg-surface-container-low transition-colors cursor-pointer border-l-4 border-primary" onclick="openShiftDrawer('104')">
+<!-- Col 1: Shift Title & Meta -->
+<div class="lg:col-span-3 flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#104</span>
+<span class="font-title-md text-title-md text-on-surface">Morning Facility Inspection</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-data-tabular text-data-tabular">
+<span class="material-symbols-outlined text-label-md">schedule</span>
+<span>07:00 – 15:30</span>
+<span class="px-1 py-0.2 rounded bg-surface-container text-on-secondary-container font-label-sm text-label-sm">Day Shift</span>
+</div>
+</div>
+<!-- Col 2: Assigned Staff Rosters -->
+<div class="lg:col-span-4 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Rostered Personnel (3)</span>
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Marcus Vance</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Priya Patel</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>David Chen</span>
+</div>
+</div>
+</div>
+<!-- Col 3: Attendance Feed -->
+<div class="lg:col-span-3 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Live Punch Feed</span>
+<div class="flex items-center gap-2 text-on-surface font-data-tabular text-data-tabular">
+<span class="material-symbols-outlined text-primary text-title-md">fingerprint</span>
+<span>3 / 3 Checked In</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">(06:52, 06:58, 07:04 AM)</span>
+</div>
+</div>
+<!-- Col 4: Status & Actions -->
+<div class="lg:col-span-2 flex items-center justify-between lg:justify-end gap-space-sm">
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>In Progress</span>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Open Shift Card" type="button">
+<span class="material-symbols-outlined text-headline-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group 2: Library & Study Halls -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<!-- Section Header -->
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<h2 class="font-title-md text-title-md text-on-surface tracking-tight">Library &amp; Study Halls (North Wing)</h2>
+<span class="px-space-xs py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm">Attention Needed</span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-tertiary font-label-sm">Coverage: <strong>66% (1 Vacancy)</strong></span>
+<span class="text-surface-dim">•</span>
+<span>Shift Window: 14:00 – 22:00</span>
+</div>
+</div>
+<!-- Shift Row 2: Afternoon Sanitation & Disinfection (Shift #105) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 items-center p-space-md gap-space-md hover:bg-surface-container-low transition-colors cursor-pointer border-l-4 border-tertiary" onclick="openShiftDrawer('105')">
+<div class="lg:col-span-3 flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#105</span>
+<span class="font-title-md text-title-md text-on-surface">Afternoon Sanitation &amp; Disinfection</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-data-tabular text-data-tabular">
+<span class="material-symbols-outlined text-label-md">schedule</span>
+<span>14:00 – 22:00</span>
+<span class="px-1 py-0.2 rounded bg-surface-container text-on-secondary-container font-label-sm text-label-sm">Swing Shift</span>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Rostered Personnel (2 of 3)</span>
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Elena Gomez</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Sam Wilson</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm animate-pulse">
+<span class="material-symbols-outlined text-label-md">person_add</span>
+<span>1 Slot Needed</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-3 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Roster Threshold Status</span>
+<div class="flex items-center gap-2 text-tertiary font-label-md text-label-md">
+<span class="material-symbols-outlined text-label-lg">error</span>
+<span>1 Unassigned Slot</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">(Awaiting dispatch)</span>
+</div>
+</div>
+<div class="lg:col-span-2 flex items-center justify-between lg:justify-end gap-space-sm">
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Scheduled</span>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Open Shift Card" type="button">
+<span class="material-symbols-outlined text-headline-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group 3: Perimeter Gates & Campus Grounds -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<!-- Section Header -->
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<h2 class="font-title-md text-title-md text-on-surface tracking-tight">Perimeter Security &amp; Access Controls</h2>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Campus Gates (1 - 4)</span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-sm text-label-sm">
+<span>Coverage: <strong class="text-on-surface">1/1 Assigned</strong></span>
+<span class="text-surface-dim">•</span>
+<span>Shift Window: 22:00 – 06:00 (+1)</span>
+</div>
+</div>
+<!-- Shift Row 3: Night Security & Lockup (Shift #106) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 items-center p-space-md gap-space-md hover:bg-surface-container-low transition-colors cursor-pointer border-l-4 border-secondary" onclick="openShiftDrawer('106')">
+<div class="lg:col-span-3 flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#106</span>
+<span class="font-title-md text-title-md text-on-surface">Night Security &amp; Lockup</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-data-tabular text-data-tabular">
+<span class="material-symbols-outlined text-label-md">bedtime</span>
+<span>22:00 – 06:00</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-label-sm text-secondary">update</span>
+              Overnight (+1)
+            </span>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Rostered Personnel (1)</span>
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Arthur Pendelton</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(Badge #8831)</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-3 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Station Designation</span>
+<div class="flex items-center gap-2 text-on-surface font-body-md text-body-md">
+<span class="material-symbols-outlined text-secondary text-title-md">security</span>
+<span>All Campus Gates &amp; Barrier Checkpoint</span>
+</div>
+</div>
+<div class="lg:col-span-2 flex items-center justify-between lg:justify-end gap-space-sm">
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Scheduled</span>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Open Shift Card" type="button">
+<span class="material-symbols-outlined text-headline-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group 4: Dining Pavilion & Food Logistics -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<h2 class="font-title-md text-title-md text-on-surface tracking-tight">Dining Pavilion &amp; Central Commissary</h2>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Hall C &amp; Cold Storage</span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-sm text-label-sm">
+<span>Coverage: <strong class="text-on-surface">2/2 Assigned</strong></span>
+<span class="text-surface-dim">•</span>
+<span>Shift Window: 05:30 – 13:30</span>
+</div>
+</div>
+<!-- Shift Row 4: Morning Food Prep & Sanitization -->
+<div class="grid grid-cols-1 lg:grid-cols-12 items-center p-space-md gap-space-md hover:bg-surface-container-low transition-colors cursor-pointer border-l-4 border-primary-container" onclick="openShiftDrawer('104')">
+<div class="lg:col-span-3 flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#103</span>
+<span class="font-title-md text-title-md text-on-surface">Prep Kitchen &amp; Thermal Sanitization</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-data-tabular text-data-tabular">
+<span class="material-symbols-outlined text-label-md">schedule</span>
+<span>05:30 – 13:30</span>
+<span class="px-1 py-0.2 rounded bg-surface-container text-on-secondary-container font-label-sm text-label-sm">Morning Line</span>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Rostered Personnel (2)</span>
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Grace Adegoke</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-space-xs py-1 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Tomas Rivera</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-3 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Live Punch Feed</span>
+<div class="flex items-center gap-2 text-on-surface font-data-tabular text-data-tabular">
+<span class="material-symbols-outlined text-primary text-title-md">fingerprint</span>
+<span>2 / 2 Checked In</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">(05:22, 05:28 AM)</span>
+</div>
+</div>
+<div class="lg:col-span-2 flex items-center justify-between lg:justify-end gap-space-sm">
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>In Progress</span>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Open Shift Card" type="button">
+<span class="material-symbols-outlined text-headline-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- SLIDE-OUT DETAIL DRAWER / INSPECT PANEL (Shift #104 by Default) -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-xs z-50 flex justify-end transition-opacity duration-300 hidden" id="shiftDrawerOverlay" onclick="if(event.target === this) closeShiftDrawer()">
+<div class="w-full max-w-xl bg-surface-container-lowest h-full shadow-2xl flex flex-col overflow-y-auto transform transition-transform duration-300">
+<!-- Drawer Header -->
+<div class="p-space-md bg-surface-container-low flex items-center justify-between sticky top-0 z-10 shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="p-2 rounded-xl bg-primary-container text-on-primary">
+<span class="material-symbols-outlined text-headline-sm">verified</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-on-surface" id="drawerShiftId">Shift #104</span>
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm" id="drawerShiftStatus">In Progress</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="drawerShiftTitle">Morning Facility Inspection &amp; Decon</p>
+</div>
+</div>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="closeShiftDrawer()" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<div class="p-space-md space-y-space-md flex-1">
+<!-- Shift Metadata Strip -->
+<div class="grid grid-cols-2 gap-space-sm p-space-md bg-surface-container-low rounded-xl">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Designated Work Area</span>
+<p class="font-title-md text-title-md text-on-surface mt-0.5">Science Labs (Floor 2, 3)</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Operating Window</span>
+<p class="font-data-tabular text-data-tabular text-on-surface mt-0.5">07:00 – 15:30 (8h 30m)</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Assigned Lead</span>
+<p class="font-body-md text-body-md text-on-surface mt-0.5">Marcus Vance (Ops Level 2)</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Coverage Benchmark</span>
+<p class="font-body-md text-body-md text-primary mt-0.5 font-semibold">3 / 3 Required (100%)</p>
+</div>
+</div>
+<!-- Real-Time Double-Booking / Overlap Conflict Alert Mockup -->
+<div class="p-space-md bg-secondary-container/40 rounded-xl flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-headline-sm text-secondary">fact_check</span>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface">Staff Conflict Engine Check</span>
+<span class="font-label-sm text-label-sm text-on-secondary-container">Automated Sync</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Zero overlaps detected for Marcus Vance and David Chen. Priya Patel is cleared with 9.5h rest gap from previous swing shift.
+            </p>
+</div>
+</div>
+<!-- LIVE ATTENDANCE AUDIT ROSTER -->
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Live Attendance Audit Roster</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Physical NFC terminal and turnstile event stream</p>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md flex items-center gap-1 transition-colors" onclick="document.getElementById('correctionModal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-label-lg">edit_note</span>
+<span>Manual Override</span>
+</button>
+</div>
+<div class="space-y-space-xs">
+<!-- Staff 1 -->
+<div class="p-space-sm bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-lg text-label-lg">
+                  MV
+                </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-surface">Marcus Vance</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#ID-4890</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Gate B North Turnstile</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Checked In
+                </span>
+<span class="font-data-tabular text-data-tabular text-on-surface mt-1">06:52:14 AM</span>
+</div>
+</div>
+<!-- Staff 2 -->
+<div class="p-space-sm bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-label-lg text-label-lg">
+                  PP
+                </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-surface">Priya Patel</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#ID-3312</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Main Atrium Badge Station</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Checked In
+                </span>
+<span class="font-data-tabular text-data-tabular text-on-surface mt-1">06:58:49 AM</span>
+</div>
+</div>
+<!-- Staff 3 -->
+<div class="p-space-sm bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-outline text-surface-container-lowest flex items-center justify-center font-label-lg text-label-lg">
+                  DC
+                </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-surface">David Chen</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">#ID-9204</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Science Wing Access Port 3</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Checked In
+                </span>
+<span class="font-data-tabular text-data-tabular text-on-surface mt-1">07:04:02 AM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- AUDITABLE CHANGE LOG -->
+<div class="p-space-md bg-surface rounded-xl space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Auditable Correction Log</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Immutable Trail</span>
+</div>
+<div class="space-y-space-xs text-body-sm">
+<div class="p-space-xs bg-surface-container-lowest rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-label-lg text-primary mt-0.5">verified_user</span>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface">
+<strong class="font-label-md">Priya Patel</strong> check-in verified by <span class="font-label-sm text-on-surface-variant">Supervisor Vance</span>.
+                </p>
+<div class="flex items-center gap-space-sm font-label-sm text-label-sm text-on-surface-variant mt-0.5">
+<span>Badge reader timeout</span>
+<span>•</span>
+<span>07:02 AM Server Time</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Shift Task Checklist Snippet -->
+<div class="p-space-md bg-surface-container-low rounded-xl">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-title-md text-title-md text-on-surface">Critical Shift Checkpoints</span>
+<span class="font-label-sm text-label-sm text-primary">2 / 4 Complete</span>
+</div>
+<div class="space-y-2">
+<label class="flex items-center gap-space-sm cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded text-primary-container focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface line-through opacity-70">Ventilation hood integrity check (Lab 201)</span>
+</label>
+<label class="flex items-center gap-space-sm cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded text-primary-container focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface line-through opacity-70">Sanitizer chemical bath replenishment</span>
+</label>
+<label class="flex items-center gap-space-sm cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-primary-container focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Hazardous container lock seals check</span>
+</label>
+<label class="flex items-center gap-space-sm cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-primary-container focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Waste containment room bio-decon seal verification</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-space-md bg-surface-container-low sticky bottom-0 flex items-center justify-between gap-space-sm shadow-md">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" onclick="closeShiftDrawer()" type="button">
+          Close Panel
+        </button>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-highest hover:bg-surface-dim text-on-surface font-label-md text-label-md transition-colors" type="button">
+            Trigger Handover
+          </button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md transition-colors shadow-sm" onclick="closeShiftDrawer()" type="button">
+            Save Modifications
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: ATTENDANCE CORRECTION WITH MANDATORY REASON -->
+<div class="fixed inset-0 bg-inverse-surface/50 backdrop-blur-xs z-50 flex items-center justify-center p-space-md hidden" id="correctionModal" onclick="if(event.target === this) this.classList.add('hidden')">
+<div class="w-full max-w-lg bg-surface-container-lowest rounded-xl shadow-2xl p-space-md space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="p-2 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-headline-sm">badge</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Attendance Correction Request</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mandatory compliance audit trail logging</p>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('correctionModal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<div class="space-y-space-sm">
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Target Personnel</label>
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none">
+<option>Priya Patel (Badge #3312) - Science Labs</option>
+<option>Marcus Vance (Badge #4890) - Science Labs</option>
+<option>David Chen (Badge #9204) - Science Labs</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">New Punch State</label>
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none">
+<option>Checked In</option>
+<option>Not Checked In</option>
+<option>Excused Absence</option>
+<option>Delayed Arrival (With Notice)</option>
+</select>
+</div>
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Adjusted Server Time</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none" type="time" value="06:58"/>
+</div>
+</div>
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Audit Justification Reason *</label>
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none mb-space-xs">
+<option>Badge reader fail / Turnstile hardware latency</option>
+<option>Supervisor manual on-site verification</option>
+<option>Dispatch reroute from secondary gate</option>
+<option>Emergency response deployment prior to scan</option>
+</select>
+<textarea class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-on-surface-variant focus:outline-none" placeholder="Provide supplementary operational incident notes (optional)..." rows="2"></textarea>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" onclick="document.getElementById('correctionModal').classList.add('hidden')" type="button">
+          Cancel
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md shadow-sm transition-colors" onclick="document.getElementById('correctionModal').classList.add('hidden')" type="button">
+          Commit &amp; Audit Log
+        </button>
+</div>
+</div>
+</div>
+<!-- MODAL: + NEW SHIFT CREATION -->
+<div class="fixed inset-0 bg-inverse-surface/50 backdrop-blur-xs z-50 flex items-center justify-center p-space-md hidden" id="newShiftModal" onclick="if(event.target === this) this.classList.add('hidden')">
+<div class="w-full max-w-xl bg-surface-container-lowest rounded-xl shadow-2xl p-space-md space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="p-2 rounded-lg bg-primary-container text-on-primary">
+<span class="material-symbols-outlined text-headline-sm">add_alarm</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Deploy New Operational Shift</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Assign work zones, required headcounts, and schedules</p>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('newShiftModal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<div class="space-y-space-sm">
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Shift Title</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none" placeholder="e.g. Science Pavilion Deep Sterilization" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Work Area</label>
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none">
+<option>Science Labs &amp; Bio-Research</option>
+<option>Library &amp; Study Halls</option>
+<option>North Grounds &amp; Maintenance</option>
+<option>Dining Pavilion &amp; Nutrition Services</option>
+</select>
+</div>
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Institution Facility</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container text-on-surface-variant font-body-md text-body-md" readonly="" type="text" value="Central Academic Campus"/>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm">
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Start Time</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none" type="time" value="08:00"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">End Time</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none" type="time" value="16:30"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Target Personnel</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none" max="25" min="1" type="number" value="2"/>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<input class="w-4 h-4 rounded text-primary-container focus:ring-0" id="overnightCheck" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer select-none" for="overnightCheck">
+            Flag shift as <strong>Overnight (+1 Day)</strong> rollover coverage
+          </label>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" onclick="document.getElementById('newShiftModal').classList.add('hidden')" type="button">
+          Discard
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md shadow-sm transition-colors" onclick="document.getElementById('newShiftModal').classList.add('hidden')" type="button">
+          Publish Shift to Roster
+        </button>
+</div>
+</div>
+</div>
+<script>
+    function openShiftDrawer(shiftId) {
+      const drawer = document.getElementById('shiftDrawerOverlay');
+      const shiftIdEl = document.getElementById('drawerShiftId');
+      const shiftTitleEl = document.getElementById('drawerShiftTitle');
+      const shiftStatusEl = document.getElementById('drawerShiftStatus');
+
+      if (shiftId === '105') {
+        shiftIdEl.textContent = 'Shift #105';
+        shiftTitleEl.textContent = 'Afternoon Sanitation & Disinfection';
+        shiftStatusEl.textContent = 'Attention Needed';
+        shiftStatusEl.className = 'px-space-xs py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm';
+      } else if (shiftId === '106') {
+        shiftIdEl.textContent = 'Shift #106';
+        shiftTitleEl.textContent = 'Night Security & Lockup';
+        shiftStatusEl.textContent = 'Scheduled';
+        shiftStatusEl.className = 'px-space-xs py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm';
+      } else {
+        shiftIdEl.textContent = 'Shift #104';
+        shiftTitleEl.textContent = 'Morning Facility Inspection';
+        shiftStatusEl.textContent = 'In Progress';
+        shiftStatusEl.className = 'px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm';
+      }
+
+      drawer.classList.remove('hidden');
+    }
+
+    function closeShiftDrawer() {
+      document.getElementById('shiftDrawerOverlay').classList.add('hidden');
+    }
+  </script>
+</div></main></div></div></body></html>
