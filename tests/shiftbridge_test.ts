@@ -53,6 +53,11 @@ runTest('Accurately calculates shift duration spanning midnight crossover', () =
   assert.equal(duration, '8h 30m', `Expected '8h 30m', got '${duration}'`);
 });
 
+runTest('Returns no duration for invalid or reversed timestamps', () => {
+  assert.equal(formatDuration('invalid', '2026-10-28T06:30:00Z'), '');
+  assert.equal(formatDuration('2026-10-28T06:30:00Z', '2026-10-27T22:00:00Z'), '');
+});
+
 runTest('Detects shift collision when new shift overlaps existing assignment', () => {
   const mockExistingShifts: Shift[] = [
     {
@@ -169,10 +174,31 @@ runTest('Rejects incomplete browser storage payloads', () => {
   assert.equal(isShiftBridgeState(null), false);
   assert.equal(isShiftBridgeState({ organization: { id: 'org-1' }, profiles: [] }), false);
   assert.equal(isShiftBridgeState({
-    organization: { id: 'org-1' },
+    organization: {
+      id: 'org-1', name: 'Demo Organization', institution_type: 'school_college', timezone: 'UTC',
+      created_at: '2026-01-01T00:00:00.000Z', updated_at: '2026-01-01T00:00:00.000Z'
+    },
     profiles: [], workAreas: [], shifts: [], shiftAssignments: [], attendance: [],
     tasks: [], taskAssignments: [], handovers: [], auditEvents: []
   }), true);
+});
+
+runTest('Rejects malformed records and invalid enum values in saved state', () => {
+  assert.equal(isShiftBridgeState(storageEngine.resetToDefaultSeed()), true);
+  const baseState = {
+    organization: {
+      id: 'org-1', name: 'Demo Organization', institution_type: 'school_college', timezone: 'UTC',
+      created_at: '2026-01-01T00:00:00.000Z', updated_at: '2026-01-01T00:00:00.000Z'
+    },
+    profiles: [], workAreas: [], shifts: [], shiftAssignments: [], attendance: [],
+    tasks: [], taskAssignments: [], handovers: [], auditEvents: []
+  };
+  assert.equal(isShiftBridgeState({ ...baseState, profiles: [null] }), false);
+  assert.equal(isShiftBridgeState({ ...baseState, organization: { ...baseState.organization, institution_type: 'unknown' } }), false);
+  assert.equal(isShiftBridgeState({
+    ...baseState,
+    profiles: [{ id: 'staff-1', organization_id: 'org-1', full_name: 'Demo', email: 'demo@example.test', job_title: 'Staff', active: true, role: 'root' }]
+  }), false);
 });
 
 // -----------------------------------------------------------------------------
@@ -199,6 +225,24 @@ runTest('Rejects check-in for already expired shifts', () => {
   const pastEnd = new Date(Date.now() - 2 * 3600 * 1000).toISOString();
   const pastResult = isCheckInEligible(pastStart, pastEnd);
   assert.equal(pastResult.eligible, false, 'Expired past shift should be ineligible for check in');
+});
+
+runTest('Fails closed for malformed or reversed shift schedules', () => {
+  const now = new Date('2026-10-27T10:00:00Z');
+  const malformed = isCheckInEligible('not-a-date', '2026-10-27T12:00:00Z', now);
+  const reversed = isCheckInEligible('2026-10-27T12:00:00Z', '2026-10-27T10:00:00Z', now);
+
+  assert.equal(malformed.eligible, false);
+  assert.match(malformed.message, /schedule is invalid/i);
+  assert.equal(reversed.eligible, false);
+  assert.match(reversed.message, /schedule is invalid/i);
+});
+
+runTest('Allows check-in at the exact opening and closing boundaries', () => {
+  const start = '2026-10-27T12:00:00Z';
+  const end = '2026-10-27T20:00:00Z';
+  assert.equal(isCheckInEligible(start, end, new Date('2026-10-27T10:00:00Z')).eligible, true);
+  assert.equal(isCheckInEligible(start, end, new Date(end)).eligible, true);
 });
 
 // -----------------------------------------------------------------------------
@@ -347,5 +391,6 @@ runTest('Dynamic institution mode switch preserves cross-sector records', () => 
 });
 
 console.log('\n================================================================');
-console.log(`🎉 TEST SUMMARY: ${passedTests}/${totalTests} TESTS PASSED CLEANLY (100%)`);
+const passPercentage = totalTests === 0 ? 100 : Math.round((passedTests / totalTests) * 100);
+console.log(`🎉 TEST SUMMARY: ${passedTests}/${totalTests} TESTS PASSED (${passPercentage}%)`);
 console.log('================================================================\n');

@@ -114,6 +114,12 @@ export const ShiftRoster: React.FC<ShiftRosterProps> = () => {
       setFormError('Shift title is required.');
       return;
     }
+    const startTimestamp = Date.parse(calculatedStartsAt);
+    const endTimestamp = Date.parse(calculatedEndsAt);
+    if (!Number.isFinite(startTimestamp) || !Number.isFinite(endTimestamp) || endTimestamp <= startTimestamp) {
+      setFormError('End time must be later than start time. Enable the overnight option if the shift crosses midnight.');
+      return;
+    }
     if (formSelectedStaff.length === 0) {
       setFormError('Please assign at least one staff member.');
       return;

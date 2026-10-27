@@ -44,22 +44,64 @@ interface ShiftBridgeState {
   auditEvents: AuditEvent[];
 }
 
+type UnknownRecord = Record<string, unknown>;
+
+function isRecord(value: unknown): value is UnknownRecord {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function hasStringFields(value: unknown, fields: string[]): value is UnknownRecord {
+  return isRecord(value) && fields.every(field => typeof value[field] === 'string');
+}
+
 export function isShiftBridgeState(value: unknown): value is ShiftBridgeState {
-  if (typeof value !== 'object' || value === null) return false;
+  if (!isRecord(value)) return false;
   const candidate = value as Partial<ShiftBridgeState>;
-  return Boolean(
-    candidate.organization
-    && typeof candidate.organization.id === 'string'
-    && Array.isArray(candidate.profiles)
-    && Array.isArray(candidate.workAreas)
-    && Array.isArray(candidate.shifts)
-    && Array.isArray(candidate.shiftAssignments)
-    && Array.isArray(candidate.attendance)
-    && Array.isArray(candidate.tasks)
-    && Array.isArray(candidate.taskAssignments)
-    && Array.isArray(candidate.handovers)
-    && Array.isArray(candidate.auditEvents)
-  );
+  const collections = [
+    candidate.profiles,
+    candidate.workAreas,
+    candidate.shifts,
+    candidate.shiftAssignments,
+    candidate.attendance,
+    candidate.tasks,
+    candidate.taskAssignments,
+    candidate.handovers,
+    candidate.auditEvents
+  ];
+  if (!hasStringFields(candidate.organization, ['id', 'name', 'timezone', 'created_at', 'updated_at'])
+    || !['school_college', 'hospital'].includes(candidate.organization.institution_type as string)
+    || !collections.every(Array.isArray)) return false;
+
+  const [profiles, workAreas, shifts, shiftAssignments, attendance, tasks, taskAssignments, handovers, auditEvents] = collections;
+  return profiles!.every(profile =>
+    hasStringFields(profile, ['id', 'organization_id', 'full_name', 'email', 'job_title'])
+    && typeof profile.active === 'boolean'
+    && ['admin', 'staff'].includes(profile.role as string))
+    && workAreas!.every(area =>
+      hasStringFields(area, ['id', 'organization_id', 'name'])
+      && typeof area.active === 'boolean'
+      && ['school_college', 'hospital'].includes(area.institution_type as string))
+    && shifts!.every(shift =>
+      hasStringFields(shift, ['id', 'organization_id', 'work_area_id', 'title', 'starts_at', 'ends_at'])
+      && ['Scheduled', 'In Progress', 'Completed', 'Cancelled'].includes(shift.status as string)
+      && (shift.assignments === undefined || Array.isArray(shift.assignments)))
+    && shiftAssignments!.every(assignment =>
+      hasStringFields(assignment, ['id', 'organization_id', 'shift_id', 'staff_profile_id']))
+    && attendance!.every(record =>
+      hasStringFields(record, ['id', 'organization_id', 'shift_assignment_id'])
+      && ['Not Checked In', 'Checked In', 'Checked Out', 'Absent'].includes(record.status as string))
+    && tasks!.every(task =>
+      hasStringFields(task, ['id', 'organization_id', 'shift_id', 'work_area_id', 'title'])
+      && ['To Do', 'In Progress', 'Blocked', 'Done'].includes(task.status as string)
+      && ['Low', 'Medium', 'High', 'Critical'].includes(task.priority as string))
+    && taskAssignments!.every(assignment =>
+      hasStringFields(assignment, ['id', 'organization_id', 'task_id', 'staff_profile_id']))
+    && handovers!.every(handover =>
+      hasStringFields(handover, ['id', 'organization_id', 'shift_id', 'work_area_id', 'title', 'description'])
+      && ['Open', 'Acknowledged', 'Resolved'].includes(handover.status as string)
+      && ['Low', 'Medium', 'High', 'Critical'].includes(handover.priority as string))
+    && auditEvents!.every(event =>
+      hasStringFields(event, ['id', 'organization_id', 'actor_profile_id', 'action', 'entity_type', 'entity_id', 'created_at']));
 }
 
 function loadState(): ShiftBridgeState {

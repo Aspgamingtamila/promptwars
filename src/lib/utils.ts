@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { format, parseISO, isAfter, isBefore, subHours } from 'date-fns';
+import { format, parseISO, isAfter, isBefore, isValid, subHours } from 'date-fns';
 import { Shift, OverlapConflict } from '../types';
 
 export function cn(...inputs: ClassValue[]) {
@@ -52,7 +52,8 @@ export function formatDuration(startsAt: string, endsAt: string): string {
   try {
     const start = new Date(startsAt).getTime();
     const end = new Date(endsAt).getTime();
-    const diffMs = Math.max(0, end - start);
+    if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) return '';
+    const diffMs = end - start;
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
     const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
     return `${diffHours}h ${diffMins}m`;
@@ -69,6 +70,9 @@ export function isCheckInEligible(startsAt: string, endsAt: string, now: Date = 
   try {
     const start = parseISO(startsAt);
     const end = parseISO(endsAt);
+    if (!isValid(start) || !isValid(end) || !isValid(now) || !isAfter(end, start)) {
+      return { eligible: false, message: 'Shift schedule is invalid. Contact your administrator.' };
+    }
     const windowStart = subHours(start, 2);
 
     if (isBefore(now, windowStart)) {
@@ -90,7 +94,7 @@ export function isCheckInEligible(startsAt: string, endsAt: string, now: Date = 
       message: 'Eligible for Check-In'
     };
   } catch {
-    return { eligible: true, message: 'Eligible' };
+    return { eligible: false, message: 'Shift schedule is invalid. Contact your administrator.' };
   }
 }
 
