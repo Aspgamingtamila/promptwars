@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useInstitution } from '../../context/InstitutionContext';
 import { useAuth } from '../../context/AuthContext';
 import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
-import { Shift, ShiftStatus, AttendanceStatus } from '../../types';
+import { Shift, AttendanceStatus } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
+import { Avatar } from '../common/Avatar';
 import {
   formatTime,
   formatDate,
@@ -408,14 +409,7 @@ export const ShiftRoster: React.FC<ShiftRosterProps> = () => {
                               key={assignment.id}
                               className="inline-flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1"
                             >
-                              <img
-                                src={
-                                  assignment.staff?.avatar_url ||
-                                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
-                                }
-                                alt={staffName}
-                                className="w-5 h-5 rounded-full object-cover"
-                              />
+                              <Avatar name={staffName} role={assignment.staff?.role} size="sm" className="!h-5 !w-5 !text-[8px]" />
                               <span className="text-[12px] font-bold text-slate-800">{staffName}</span>
                               <StatusBadge status={attStatus} size="sm" />
 

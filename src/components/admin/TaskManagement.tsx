@@ -6,7 +6,8 @@ import { TaskItem, TaskPriority, TaskStatus } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatTime, formatDate, exportToCSV, getErrorMessage } from '../../lib/utils';
+import { Avatar } from '../common/Avatar';
+import { formatTime, exportToCSV, getErrorMessage } from '../../lib/utils';
 
 export const TaskManagement: React.FC = () => {
   useStorageSubscription();
@@ -406,13 +407,7 @@ export const TaskManagement: React.FC = () => {
                 <div className="flex items-center -space-x-1.5 overflow-hidden">
                   {task.assignments && task.assignments.length > 0 ? (
                     task.assignments.map(a => (
-                      <img
-                        key={a.id}
-                        src={a.staff?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
-                        alt={a.staff?.full_name}
-                        title={a.staff?.full_name}
-                        className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover"
-                      />
+                      <Avatar key={a.id} name={a.staff?.full_name} role={a.staff?.role} size="sm" className="!h-6 !w-6 !text-[9px] ring-2 ring-white" />
                     ))
                   ) : (
                     <span className="text-[10px] text-slate-400 italic">Unassigned</span>

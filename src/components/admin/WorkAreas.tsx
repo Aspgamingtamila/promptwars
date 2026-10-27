@@ -5,7 +5,7 @@ import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { WorkArea, InstitutionType } from '../../types';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatDate, getErrorMessage } from '../../lib/utils';
+import { getErrorMessage } from '../../lib/utils';
 
 export const WorkAreas: React.FC = () => {
   useStorageSubscription();

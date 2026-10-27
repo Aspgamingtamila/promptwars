@@ -138,8 +138,8 @@ export function checkStaffShiftOverlap(
 /**
  * Export data array to CSV file download in browser
  */
-export function exportToCSV<T extends object>(filename: string, rows: T[]) {
-  if (!rows || !rows.length) return;
+export function serializeToCSV<T extends object>(rows: T[]): string {
+  if (!rows || !rows.length) return '';
   const keys = Object.keys(rows[0]) as Array<keyof T>;
   const escapeCell = (value: unknown) => {
     const raw = value == null ? '' : value instanceof Date ? value.toLocaleString() : String(value);
@@ -147,10 +147,15 @@ export function exportToCSV<T extends object>(filename: string, rows: T[]) {
     const safe = /^[\u0000-\u0020\uFEFF]*[=+@-]/u.test(raw) ? `'${raw}` : raw;
     return `"${safe.replace(/"/g, '""')}"`;
   };
-  const csvContent = [
+  return [
     keys.map(key => escapeCell(String(key))).join(','),
     ...rows.map(row => keys.map(key => escapeCell(row[key])).join(','))
   ].join('\r\n');
+}
+
+export function exportToCSV<T extends object>(filename: string, rows: T[]) {
+  if (!rows || !rows.length) return;
+  const csvContent = serializeToCSV(rows);
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');

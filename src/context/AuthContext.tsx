@@ -3,15 +3,13 @@ import { StaffProfile, UserRole } from '../types';
 import { storageEngine } from '../lib/storageEngine';
 import { isDemoMode } from '../lib/demoMode';
 
-const DEMO_PASSWORD = 'demo-only';
-
 interface AuthContextType {
   currentUser: StaffProfile | null;
   role: UserRole | null;
   isAdmin: boolean;
   isStaff: boolean;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<boolean>;
+  signIn: (email: string) => Promise<boolean>;
   switchUser: (profile: StaffProfile) => void;
   signOut: () => void;
   availableDemoUsers: StaffProfile[];
@@ -46,10 +44,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
-  const signIn = async (email: string, password: string): Promise<boolean> => {
+  const signIn = async (email: string): Promise<boolean> => {
     // This mock sign-in exists only to preview seeded data with `vite dev`.
     // Production builds must use a real server-verified authentication provider.
-    if (!isDemoMode || password !== DEMO_PASSWORD) {
+    if (!isDemoMode) {
       return false;
     }
 

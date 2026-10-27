@@ -26,7 +26,6 @@ export interface StaffProfile {
   role: UserRole;
   job_title: string;
   active: boolean;
-  avatar_url?: string;
   created_at: string;
   updated_at: string;
 }

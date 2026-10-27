@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useInstitution } from '../../context/InstitutionContext';
 import { storageEngine } from '../../lib/storageEngine';
 import { formatDate } from '../../lib/utils';
+import { Avatar } from '../common/Avatar';
 
 export const StaffProfile: React.FC = () => {
   const { currentUser, signOut } = useAuth();
@@ -16,14 +17,7 @@ export const StaffProfile: React.FC = () => {
     <div className="flex flex-col w-full space-y-5 pb-20 max-w-xl mx-auto">
       {/* Profile Card */}
       <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs flex flex-col items-center text-center">
-        <img
-          src={
-            currentUser?.avatar_url ||
-            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80'
-          }
-          alt={currentUser?.full_name}
-          className="w-20 h-20 rounded-full object-cover ring-4 ring-teal-100 shadow-md mb-3"
-        />
+        <Avatar name={currentUser?.full_name} role={currentUser?.role} size="xl" className="!h-20 !w-20 !text-2xl mb-3 ring-4 shadow-md" />
         <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">{currentUser?.full_name}</h2>
         <span className="text-xs font-semibold text-slate-500 mt-0.5">{currentUser?.job_title}</span>
         <span className="mt-2 px-3 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200 text-[11px] font-bold uppercase tracking-wider">

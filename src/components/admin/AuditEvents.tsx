@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useInstitution } from '../../context/InstitutionContext';
 import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { formatDateTime, exportToCSV } from '../../lib/utils';
 import { EmptyState } from '../common/EmptyState';
 
 export const AuditEvents: React.FC = () => {
   useStorageSubscription();
-  const { terminology } = useInstitution();
   const [filterAction, setFilterAction] = useState<string>('All');
   const [expandedEventId, setExpandedEventId] = useState<string | null>(null);
 

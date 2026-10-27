@@ -5,6 +5,7 @@ import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { StaffProfile, UserRole } from '../../types';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
+import { Avatar } from '../common/Avatar';
 import { formatDate, getErrorMessage } from '../../lib/utils';
 
 export const StaffManagement: React.FC = () => {
@@ -102,8 +103,7 @@ export const StaffManagement: React.FC = () => {
             phone: phone.trim() || null,
             role,
             job_title: jobTitle.trim(),
-            active: true,
-            avatar_url: `https://images.unsplash.com/photo-${1534528741775 + Math.floor(Math.random() * 1000)}?w=150&auto=format&fit=crop&q=80`
+            active: true
           },
           currentUser?.id || 'user-admin-01'
         );
@@ -222,11 +222,7 @@ export const StaffManagement: React.FC = () => {
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={staff.avatar_url || 'https://images.unsplash.com/photo-1534528741775?w=150'}
-                          alt={staff.full_name}
-                          className="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200 shrink-0"
-                        />
+                        <Avatar name={staff.full_name} role={staff.role} size="lg" />
                         <div>
                           <span className="font-bold text-slate-900 block text-[13px]">{staff.full_name}</span>
                           <span className="text-[11px] text-slate-400 font-mono">{staff.email}</span>

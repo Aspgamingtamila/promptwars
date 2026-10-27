@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAuth } from './context/AuthContext';
-import { useInstitution } from './context/InstitutionContext';
 import { LoginPage } from './components/auth/LoginPage';
 import { Sidebar, AdminTab } from './components/common/Sidebar';
 import { Header } from './components/common/Header';
@@ -23,7 +22,6 @@ import { StaffProfile } from './components/staff/StaffProfile';
 
 export const AppContent: React.FC = () => {
   const { currentUser, isAdmin, isStaff } = useAuth();
-  const { terminology } = useInstitution();
 
   // Admin Tab State
   const [adminTab, setAdminTab] = useState<AdminTab>('overview-command');

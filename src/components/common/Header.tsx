@@ -2,18 +2,12 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useInstitution } from '../../context/InstitutionContext';
 import { formatDate } from '../../lib/utils';
-import { StaffProfile } from '../../types';
+import { Avatar } from './Avatar';
 
-interface HeaderProps {
-  onToggleViewMode?: () => void;
-  isStaffPreview?: boolean;
-}
-
-export const Header: React.FC<HeaderProps> = ({ onToggleViewMode, isStaffPreview = false }) => {
+export const Header: React.FC = () => {
   const { currentUser, switchUser, signOut, availableDemoUsers } = useAuth();
   const { institutionType, setInstitutionType, resetAllData } = useInstitution();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const todayStr = formatDate(new Date().toISOString());
 
@@ -90,14 +84,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleViewMode, isStaffPreview
             type="button"
             aria-expanded={showUserDropdown}
           >
-            <img
-              alt={currentUser?.full_name || 'Profile'}
-              className="w-8 h-8 rounded-full object-cover ring-1 ring-slate-200"
-              src={
-                currentUser?.avatar_url ||
-                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
-              }
-            />
+            <Avatar name={currentUser?.full_name} role={currentUser?.role} size="md" />
             <div className="flex flex-col text-left pr-1 hidden sm:flex">
               <span className="font-label-md text-[13px] font-bold text-on-surface leading-tight">
                 {currentUser?.full_name}
@@ -143,11 +130,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleViewMode, isStaffPreview
                       }`}
                       type="button"
                     >
-                      <img
-                        src={user.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
-                        alt={user.full_name}
-                        className="w-7 h-7 rounded-full object-cover shrink-0"
-                      />
+                      <Avatar name={user.full_name} role={user.role} size="sm" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
                           <span className="text-[12px] font-bold truncate">{user.full_name}</span>

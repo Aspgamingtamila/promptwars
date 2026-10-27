@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { useInstitution } from '../../context/InstitutionContext';
 import { useAuth } from '../../context/AuthContext';
 import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
-import { HandoverLog, HandoverPriority, HandoverStatus } from '../../types';
+import { HandoverLog, HandoverPriority } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
 import { formatDateTime, exportToCSV, getErrorMessage } from '../../lib/utils';
-import { summarizeHandover, validateNonClinicalHandover } from '../../lib/gemini';
+import { summarizeHandover, validateNonClinicalHandover } from '../../lib/handoverSummary';
 
 export const HandoverDeck: React.FC = () => {
   useStorageSubscription();
-  const { terminology, institutionType } = useInstitution();
+  const { institutionType } = useInstitution();
   const { currentUser } = useAuth();
 
   const [statusFilter, setStatusFilter] = useState<string>('All');
@@ -283,6 +283,21 @@ export const HandoverDeck: React.FC = () => {
             </button>
           );
         })}
+      </div>
+
+      <div className="flex items-center justify-end gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3">
+        <label htmlFor="handover-priority-filter" className="text-xs font-semibold text-slate-600">Priority</label>
+        <select
+          id="handover-priority-filter"
+          value={priorityFilter}
+          onChange={event => setPriorityFilter(event.target.value)}
+          className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-container"
+        >
+          <option value="All">All priorities</option>
+          {(['Critical', 'High', 'Medium', 'Low'] as HandoverPriority[]).map(priority => (
+            <option key={priority} value={priority}>{priority}</option>
+          ))}
+        </select>
       </div>
 
       {/* 4. Handovers List */}

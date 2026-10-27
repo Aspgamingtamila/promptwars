@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 import { cn } from '../../lib/utils';
 
 interface ModalProps {
@@ -18,14 +18,57 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   maxWidth = 'lg'
 }) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  const subtitleId = useId();
+
   useEffect(() => {
+    if (!isOpen) return;
+
+    const previousFocus = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+    const dialog = dialogRef.current;
+    const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const getFocusable = () => Array.from(dialog?.querySelectorAll<HTMLElement>(focusableSelector) || [])
+      .filter(element => !element.hasAttribute('hidden') && element.getAttribute('aria-hidden') !== 'true');
+
+    (getFocusable()[0] || dialog)?.focus();
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
         onClose();
+        return;
+      }
+
+      if (e.key === 'Tab' && dialog) {
+        const focusable = getFocusable();
+        if (focusable.length === 0) {
+          e.preventDefault();
+          dialog.focus();
+          return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        } else if (!dialog.contains(document.activeElement)) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      previousFocus?.focus();
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -55,12 +98,16 @@ export const Modal: React.FC<ModalProps> = ({
         )}
         role="dialog"
         aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={subtitle ? subtitleId : undefined}
+        tabIndex={-1}
+        ref={dialogRef}
       >
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-surface-container-low/40">
           <div>
-            <h3 className="text-lg font-bold text-on-surface tracking-tight">{title}</h3>
-            {subtitle && <p className="text-xs text-on-surface-variant mt-0.5">{subtitle}</p>}
+            <h3 id={titleId} className="text-lg font-bold text-on-surface tracking-tight">{title}</h3>
+            {subtitle && <p id={subtitleId} className="text-xs text-on-surface-variant mt-0.5">{subtitle}</p>}
           </div>
           <button
             onClick={onClose}

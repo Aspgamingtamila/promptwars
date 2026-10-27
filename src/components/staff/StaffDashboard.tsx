@@ -6,9 +6,9 @@ import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatTime, formatDate, formatDuration, isCheckInEligible, getErrorMessage } from '../../lib/utils';
+import { formatTime, formatDuration, isCheckInEligible, getErrorMessage } from '../../lib/utils';
 import { TaskItem, TaskStatus, HandoverPriority } from '../../types';
-import { summarizeHandover, validateNonClinicalHandover } from '../../lib/gemini';
+import { summarizeHandover, validateNonClinicalHandover } from '../../lib/handoverSummary';
 
 interface StaffDashboardProps {
   onNavigateTab: (tab: 'my-shift' | 'my-tasks' | 'handovers' | 'profile') => void;

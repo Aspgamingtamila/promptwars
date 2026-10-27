@@ -44,7 +44,7 @@ interface ShiftBridgeState {
   auditEvents: AuditEvent[];
 }
 
-function isShiftBridgeState(value: unknown): value is ShiftBridgeState {
+export function isShiftBridgeState(value: unknown): value is ShiftBridgeState {
   if (typeof value !== 'object' || value === null) return false;
   const candidate = value as Partial<ShiftBridgeState>;
   return Boolean(
@@ -217,7 +217,7 @@ class StorageEngine {
     return updated;
   }
 
-  public toggleStaffActive(id: string, actorId: string, reason?: string): StaffProfile {
+  public toggleStaffActive(id: string, actorId: string): StaffProfile {
     const staff = this.getProfileById(id);
     if (!staff) throw new Error('Staff not found');
 

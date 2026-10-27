@@ -30,7 +30,6 @@ export const initialProfiles: StaffProfile[] = [
     role: 'admin',
     job_title: 'Operations Director',
     active: true,
-    avatar_url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
     created_at: new Date(Date.now() - 30 * 86400000).toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -43,7 +42,6 @@ export const initialProfiles: StaffProfile[] = [
     role: 'staff',
     job_title: 'Campus Facilities Lead',
     active: true,
-    avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     created_at: new Date(Date.now() - 25 * 86400000).toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -56,7 +54,6 @@ export const initialProfiles: StaffProfile[] = [
     role: 'staff',
     job_title: 'Environmental Services Specialist',
     active: true,
-    avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     created_at: new Date(Date.now() - 25 * 86400000).toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -69,7 +66,6 @@ export const initialProfiles: StaffProfile[] = [
     role: 'staff',
     job_title: 'Sanitation & Safety Lead',
     active: true,
-    avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
     created_at: new Date(Date.now() - 20 * 86400000).toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -82,7 +78,6 @@ export const initialProfiles: StaffProfile[] = [
     role: 'staff',
     job_title: 'Support Services Coordinator',
     active: true,
-    avatar_url: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
     created_at: new Date(Date.now() - 15 * 86400000).toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -95,7 +90,6 @@ export const initialProfiles: StaffProfile[] = [
     role: 'staff',
     job_title: 'Facilities Technician',
     active: false, // Inactive example to test deactivation filter
-    avatar_url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80',
     created_at: new Date(Date.now() - 40 * 86400000).toISOString(),
     updated_at: new Date().toISOString()
   }

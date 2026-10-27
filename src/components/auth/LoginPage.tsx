@@ -7,7 +7,6 @@ export const LoginPage: React.FC = () => {
   const { signIn } = useAuth();
   const demoMode = isDemoMode;
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -17,9 +16,9 @@ export const LoginPage: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const ok = await signIn(email.trim(), password);
+      const ok = await signIn(email.trim());
       if (!ok) {
-        setError('Sign-in failed. Check the demo credentials and try again.');
+        setError('No active demo account matches that email. Choose a listed persona.');
       }
     } catch (err: unknown) {
       setError(getErrorMessage(err, 'Authentication failed.'));
@@ -28,10 +27,18 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const handleQuickFill = (userEmail: string) => {
+  const handleQuickSignIn = async (userEmail: string) => {
     setEmail(userEmail);
-    setPassword('demo-only');
     setError(null);
+    setIsSubmitting(true);
+    try {
+      const ok = await signIn(userEmail);
+      if (!ok) setError('This demo account is unavailable. Please choose another persona.');
+    } catch (err: unknown) {
+      setError(getErrorMessage(err, 'Unable to open the demo account.'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -66,10 +73,10 @@ export const LoginPage: React.FC = () => {
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-950">
             {import.meta.env.VITE_PUBLIC_DEMO_MODE === 'true'
               ? 'Public demo with synthetic records only. Changes stay in your browser. Do not enter real information.'
-              : 'Development demo only. The demo password is public and does not protect real data.'}
+              : 'Development demo with synthetic records only. Sign-in is a preview feature, not authentication.'}
           </div>
           {error && (
-            <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs font-semibold flex items-center gap-2">
+            <div id="login-error" role="alert" aria-live="polite" className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs font-semibold flex items-center gap-2">
               <span className="material-symbols-outlined text-[18px] text-rose-600">error</span>
               <span>{error}</span>
             </div>
@@ -77,29 +84,19 @@ export const LoginPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Institutional Email *
+              <label htmlFor="login-email" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                Demo account email
               </label>
               <input
+                id="login-email"
                 type="email"
                 required
+                autoComplete="username"
                 value={email}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? 'login-error' : undefined}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="name@shiftbridge.org"
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 font-medium focus:outline-none focus:border-primary-container"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Password *
-              </label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="••••••••••••"
+                placeholder="Choose a listed demo account"
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 font-medium focus:outline-none focus:border-primary-container"
               />
             </div>
@@ -109,19 +106,20 @@ export const LoginPage: React.FC = () => {
               disabled={isSubmitting}
               className="w-full py-3 bg-primary-container hover:bg-primary text-white rounded-xl text-xs font-bold shadow-md transition-all disabled:opacity-50"
             >
-              {isSubmitting ? 'Authenticating...' : 'Sign In to Portal'}
+              {isSubmitting ? 'Opening demo...' : 'Open Demo'}
             </button>
           </form>
 
           {/* Local-only demo account selector */}
           <div className="pt-4 border-t border-slate-100">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2 text-center">
-              Local Demo Accounts
+              Demo personas
             </span>
             <div className="grid grid-cols-1 gap-2">
               <button
                 type="button"
-                onClick={() => handleQuickFill('admin@shiftbridge.org')}
+                onClick={() => void handleQuickSignIn('admin@shiftbridge.org')}
+                disabled={isSubmitting}
                 className="p-2.5 rounded-xl border border-amber-200 bg-amber-50/60 hover:bg-amber-100/60 text-left transition-colors flex items-center justify-between"
               >
                 <div>
@@ -129,13 +127,14 @@ export const LoginPage: React.FC = () => {
                   <span className="text-[11px] text-amber-800 font-mono">admin@shiftbridge.org</span>
                 </div>
                 <span className="text-[10px] font-bold text-amber-800 bg-amber-200/60 px-2 py-0.5 rounded-full">
-                  Fill
+                  Open
                 </span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleQuickFill('staff.campus@shiftbridge.org')}
+                onClick={() => void handleQuickSignIn('staff.campus@shiftbridge.org')}
+                disabled={isSubmitting}
                 className="p-2.5 rounded-xl border border-teal-200 bg-teal-50/60 hover:bg-teal-100/60 text-left transition-colors flex items-center justify-between"
               >
                 <div>
@@ -143,13 +142,14 @@ export const LoginPage: React.FC = () => {
                   <span className="text-[11px] text-teal-800 font-mono">staff.campus@shiftbridge.org</span>
                 </div>
                 <span className="text-[10px] font-bold text-teal-800 bg-teal-200/60 px-2 py-0.5 rounded-full">
-                  Fill
+                  Open
                 </span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleQuickFill('staff.hospital@shiftbridge.org')}
+                onClick={() => void handleQuickSignIn('staff.hospital@shiftbridge.org')}
+                disabled={isSubmitting}
                 className="p-2.5 rounded-xl border border-indigo-200 bg-indigo-50/60 hover:bg-indigo-100/60 text-left transition-colors flex items-center justify-between"
               >
                 <div>
@@ -157,7 +157,7 @@ export const LoginPage: React.FC = () => {
                   <span className="text-[11px] text-indigo-800 font-mono">staff.hospital@shiftbridge.org</span>
                 </div>
                 <span className="text-[10px] font-bold text-indigo-800 bg-indigo-200/60 px-2 py-0.5 rounded-full">
-                  Fill
+                  Open
                 </span>
               </button>
             </div>

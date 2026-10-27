@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useInstitution } from '../../context/InstitutionContext';
-import { useAuth } from '../../context/AuthContext';
 import { storageEngine, useStorageSubscription } from '../../lib/storageEngine';
 import { StatusBadge } from '../common/StatusBadge';
-import { formatTime, formatDate, isOvernightShift } from '../../lib/utils';
 import { AdminTab } from '../common/Sidebar';
 
 interface OverviewDeckProps {
@@ -19,7 +17,6 @@ export const OverviewDeck: React.FC<OverviewDeckProps> = ({
 }) => {
   useStorageSubscription();
   const { terminology, institutionType, toggleInstitutionType } = useInstitution();
-  const { currentUser } = useAuth();
   const [alertDismissed, setAlertDismissed] = useState(false);
 
   // Fetch live operational records from storageEngine

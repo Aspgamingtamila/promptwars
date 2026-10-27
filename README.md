@@ -76,8 +76,7 @@ promptwars/
 │   ├── lib/
 │   │   ├── storageEngine.ts           # Stateful repository with event bus reactivity
 │   │   ├── seedData.ts                # Rich seed dataset for higher-ed and healthcare
-│   │   ├── gemini.ts                  # Local summary and client-side warning helper
-│   │   ├── supabase.ts                # Supabase PostgreSQL client configuration
+│   │   ├── handoverSummary.ts         # Local summary and client-side warning helper
 │   │   └── utils.ts                   # Date/time formatting, overlap & window validation
 │   ├── types/
 │   │   └── index.ts                   # TypeScript interfaces matching database schema
@@ -86,9 +85,10 @@ promptwars/
 ├── supabase/
 │   └── migrations/
 │       ├── 20261027000001_initial_schema.sql  # Database schema draft
-│       └── 20261027000002_profile_privilege_hardening.sql  # Profile role change guard
+│       ├── 20261027000002_profile_privilege_hardening.sql  # Profile role change guard
+│       └── 20261027000003_guard_operational_updates.sql  # Staff field and transition guards
 ├── tests/
-│   └── shiftbridge_test.ts            # Automated 14-test compliance test suite
+│   └── shiftbridge_test.ts            # Automated behavior and safety regression suite
 ├── .env.example                       # Optional Supabase scaffolding placeholders
 ├── index.html                         # HTML template with Google Fonts
 ├── package.json                       # Dependencies and NPM scripts
@@ -113,13 +113,13 @@ npm install
 ```bash
 npm run dev
 ```
-Open **`http://localhost:5173/`**. Choose a seeded persona and use the demo password `demo-only`.
+Open **`http://localhost:5173/`** and choose one of the synthetic demo personas. Demo access has no password because this browser-only prototype has no authentication; never enter real information.
 
 The public preview is available at [https://aspgamingtamila.github.io/promptwars/](https://aspgamingtamila.github.io/promptwars/). It contains synthetic data only; changes are saved in your own browser.
 
 ### 4. Production status
 
-Production builds intentionally disable demo sign-in. This prototype has no real authentication or server-backed data layer, so it is not ready for production or real workforce information. The SQL files are schema drafts and are not connected to the UI. A public Supabase anon key is not a secret, but it must be paired with reviewed row-level security policies; never place a service-role key in a `VITE_*` variable.
+Production builds intentionally disable demo sign-in unless the public demo build flag is explicitly enabled. This prototype has no real authentication or server-backed data layer, so it is not ready for production or real workforce information. The SQL files are schema drafts and are not connected to the UI. Never put private credentials in a `VITE_*` variable because those values are delivered to browsers.
 
 ### 5. Build the static assets
 ```bash

@@ -4,10 +4,13 @@ import {
   checkStaffShiftOverlap,
   isCheckInEligible,
   formatDuration,
-  formatTime
+  formatTime,
+  getErrorMessage,
+  serializeToCSV
 } from '../src/lib/utils';
-import { validateNonClinicalHandover } from '../src/lib/gemini';
-import { storageEngine } from '../src/lib/storageEngine';
+import { resolveDemoMode } from '../src/lib/demoModePolicy';
+import { validateNonClinicalHandover } from '../src/lib/handoverSummary';
+import { isShiftBridgeState, storageEngine } from '../src/lib/storageEngine';
 import { Shift, StaffProfile } from '../src/types';
 
 console.log('================================================================');
@@ -23,9 +26,9 @@ function runTest(name: string, fn: () => void) {
     fn();
     console.log(`  ✅ [PASS] ${name}`);
     passedTests++;
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(`  ❌ [FAIL] ${name}`);
-    console.error(`     Error: ${err.message}\n`);
+    console.error(`     Error: ${err instanceof Error ? err.message : String(err)}\n`);
     process.exitCode = 1;
   }
 }
@@ -130,9 +133,52 @@ runTest('Allows back-to-back non-overlapping shift assignments', () => {
 });
 
 // -----------------------------------------------------------------------------
+// SUITE 2: Safe public demo and spreadsheet exports
+// -----------------------------------------------------------------------------
+console.log('\n📌 SUITE 2: Public Demo Access & Safe Data Exports');
+
+runTest('Allows development demo only on loopback hosts', () => {
+  assert.equal(resolveDemoMode(true, 'localhost'), true);
+  assert.equal(resolveDemoMode(true, '127.0.0.1'), true);
+  assert.equal(resolveDemoMode(true, 'demo.example.com'), false);
+});
+
+runTest('Keeps demo access disabled in production unless public demo is explicit', () => {
+  assert.equal(resolveDemoMode(false, 'localhost'), false);
+  assert.equal(resolveDemoMode(false, 'demo.example.com', 'true'), true);
+  assert.equal(resolveDemoMode(false, 'demo.example.com', 'false'), false);
+});
+
+runTest('Neutralizes spreadsheet formulas in exported CSV values', () => {
+  const csv = serializeToCSV([{ Note: '=HYPERLINK("https://bad.example")' }, { Note: '\t@SUM(A1:A2)' }]);
+  assert.equal(csv.includes("'=HYPERLINK"), true);
+  assert.equal(csv.includes("'\t@SUM"), true);
+});
+
+runTest('Escapes quotes, commas, and newlines in CSV cells', () => {
+  const csv = serializeToCSV([{ Note: 'Line 1, "quoted"\nLine 2' }]);
+  assert.equal(csv, '"Note"\r\n"Line 1, ""quoted""\nLine 2"');
+});
+
+runTest('Converts unknown errors to a safe fallback message', () => {
+  assert.equal(getErrorMessage(new Error('Specific failure'), 'Fallback'), 'Specific failure');
+  assert.equal(getErrorMessage({ message: 'untrusted shape' }, 'Fallback'), 'Fallback');
+});
+
+runTest('Rejects incomplete browser storage payloads', () => {
+  assert.equal(isShiftBridgeState(null), false);
+  assert.equal(isShiftBridgeState({ organization: { id: 'org-1' }, profiles: [] }), false);
+  assert.equal(isShiftBridgeState({
+    organization: { id: 'org-1' },
+    profiles: [], workAreas: [], shifts: [], shiftAssignments: [], attendance: [],
+    tasks: [], taskAssignments: [], handovers: [], auditEvents: []
+  }), true);
+});
+
+// -----------------------------------------------------------------------------
 // SUITE 2: Live Attendance & Check-In Window Verification (FR-5)
 // -----------------------------------------------------------------------------
-console.log('\n📌 SUITE 2: Live Attendance & Check-In Time Window Constraints');
+console.log('\n📌 SUITE 3: Live Attendance & Check-In Time Window Constraints');
 
 runTest('Enforces 2-hour pre-shift check-in window constraint', () => {
   // Shift starts 5 hours from now: should NOT be eligible
@@ -158,7 +204,7 @@ runTest('Rejects check-in for already expired shifts', () => {
 // -----------------------------------------------------------------------------
 // SUITE 3: Operational Task Checklists & Mandatory Blocker Reason (FR-6)
 // -----------------------------------------------------------------------------
-console.log('\n📌 SUITE 3: Task Flow & Mandatory Blocker Constraints');
+console.log('\n📌 SUITE 4: Task Flow & Mandatory Blocker Constraints');
 
 runTest('Transition to Blocked requires non-empty block reason', () => {
   assert.throws(
@@ -196,7 +242,7 @@ runTest('Transition to Blocked succeeds when valid operational rationale is prov
 // -----------------------------------------------------------------------------
 // SUITE 4: Zero Clinical PHI Guardrail Engine (FR-7 & FR-8)
 // -----------------------------------------------------------------------------
-console.log('\n📌 SUITE 4: Zero Clinical PHI Non-Medical Compliance');
+console.log('\n📌 SUITE 5: Zero Clinical PHI Non-Medical Compliance');
 
 runTest('Strictly rejects clinical patient diagnosis and medical records', () => {
   const clinicalInputs = [
@@ -231,7 +277,7 @@ runTest('Allows legitimate non-clinical environmental operations handover logs',
 // -----------------------------------------------------------------------------
 // SUITE 5: Chain of Custody & Audit Trail Immutability (FR-9)
 // -----------------------------------------------------------------------------
-console.log('\n📌 SUITE 5: Chain of Custody & Auditable Forensics');
+console.log('\n📌 SUITE 6: Chain of Custody & Auditable Forensics');
 
 runTest('Records immutable audit events for operational actions', () => {
   const initialAuditCount = storageEngine.listAuditEvents().length;
@@ -280,7 +326,7 @@ runTest('Handover transition logs acknowledging staff profile ID', () => {
 // -----------------------------------------------------------------------------
 // SUITE 6: Multi-Sector Mode Switching & Terminology Mapping (FR-2)
 // -----------------------------------------------------------------------------
-console.log('\n📌 SUITE 6: Dual-Sector Dynamic Switching & Zero Data Loss');
+console.log('\n📌 SUITE 7: Dual-Sector Dynamic Switching & Zero Data Loss');
 
 runTest('Dynamic institution mode switch preserves cross-sector records', () => {
   // Check campus work areas count

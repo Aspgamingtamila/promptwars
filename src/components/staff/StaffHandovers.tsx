@@ -6,13 +6,13 @@ import { HandoverPriority } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { Modal } from '../common/Modal';
 import { EmptyState } from '../common/EmptyState';
-import { formatDateTime, getErrorMessage } from '../../lib/utils';
-import { summarizeHandover, validateNonClinicalHandover } from '../../lib/gemini';
+import { formatDateTime } from '../../lib/utils';
+import { summarizeHandover, validateNonClinicalHandover } from '../../lib/handoverSummary';
 
 export const StaffHandovers: React.FC = () => {
   useStorageSubscription();
   const { currentUser } = useAuth();
-  const { terminology, institutionType } = useInstitution();
+  const { institutionType } = useInstitution();
   const staffId = currentUser?.id || '';
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
